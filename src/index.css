@@ -1,0 +1,141 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+body {
+  @apply bg-black text-white;
+}
+
+.dropdown {
+  @apply py-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer;
+}
+.footerTitle {
+  @apply text-white text-lg font-semibold mb-5 tracking-wide;
+}
+
+.footerList li {
+  @apply text-gray-400 mb-3 cursor-pointer transition duration-300;
+}
+
+.footerList li:hover {
+  @apply text-[#22c55e] translate-x-1;
+}
+
+.footerBottom {
+  @apply cursor-pointer transition hover:text-[#1FA2FF];
+}
+
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-animate {
+  animation: heroReveal 0.9s ease forwards;
+  opacity: 0;
+}
+
+.marquee {
+  animation: scrollText 22s linear infinite;
+}
+
+@keyframes scrollText {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+/* consultation */
+.inputStyle {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  padding: 14px 16px;
+  border-radius: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+  background: #ffffff;
+  font-size: 14px;
+  color: #021423;
+}
+
+.inputStyle::placeholder {
+  color: #9ca3af;
+}
+
+.inputStyle:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+/* label */
+.formLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* ✨ premium glow background */
+.solar-bg-glow {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(37,99,235,0.35) 0%, transparent 65%);
+  filter: blur(40px);
+  z-index: 0;
+}
+
+/* ✨ glass card enhancement */
+.glass-card {
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 28s linear infinite;
+}
+
+.inputStyle {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 16px;
+  outline: none;
+  transition: 0.3s ease;
+  background: white;
+}
+
+.inputStyle:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+}
+
+.formLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 4px;
+  display: block;
+}
