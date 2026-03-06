@@ -272,6 +272,141 @@ export default function AboutHero() {
   </div>
 </section>
 
+{/* ================= VISION SECTION ================= */}
+<section className="bg-[#f8fbff] py-28 overflow-hidden">
+  <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+
+    {/* LEFT TEXT */}
+    <motion.div
+      initial={{ opacity: 0, x: -60 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+    >
+      <p className="text-blue-600 uppercase tracking-widest font-semibold text-sm">
+        Our Vision
+      </p>
+
+      <h2 className="mt-4 text-4xl font-bold text-[#021423] leading-tight">
+        Leading India's Transition
+        <span className="block text-blue-600">
+          Toward Clean Energy
+        </span>
+      </h2>
+
+      <p className="mt-6 text-gray-600 leading-relaxed max-w-xl">
+        Our vision is to make solar energy the most accessible and
+        trusted power solution for homes and businesses across India.
+        We aim to accelerate the transition toward renewable energy
+        through innovation, reliability, and sustainable engineering.
+      </p>
+    </motion.div>
+
+    {/* RIGHT INFO GRAPHIC */}
+    <motion.div
+      initial={{ opacity: 0, x: 60 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="relative flex items-center justify-center"
+    >
+
+      {/* TARGET CIRCLE */}
+      <div className="relative w-56 h-56 rounded-full bg-gradient-to-r from-blue-500 to-emerald-400 flex items-center justify-center shadow-xl">
+
+        <div className="w-36 h-36 rounded-full bg-white flex items-center justify-center text-[#021423] font-bold text-lg">
+          Vision
+        </div>
+
+      </div>
+
+      {/* INFO CARDS */}
+      <div className="absolute -right-10 top-10 bg-white p-4 rounded-xl shadow-lg w-52">
+        <h4 className="font-semibold text-[#021423]">Sustainable Future</h4>
+        <p className="text-gray-600 text-sm mt-1">
+          Accelerating India's renewable energy adoption.
+        </p>
+      </div>
+
+      <div className="absolute -left-10 bottom-10 bg-white p-4 rounded-xl shadow-lg w-52">
+        <h4 className="font-semibold text-[#021423]">Energy Independence</h4>
+        <p className="text-gray-600 text-sm mt-1">
+          Helping homes produce their own electricity.
+        </p>
+      </div>
+
+    </motion.div>
+
+  </div>
+</section>
+
+
+{/* ================= MISSION SECTION ================= */}
+<section className="bg-white py-28 overflow-hidden">
+  <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+
+    {/* INFOGRAPHIC */}
+    <motion.div
+      initial={{ opacity: 0, x: -60 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+      className="relative flex items-center justify-center"
+    >
+
+      {/* TARGET */}
+      <div className="relative w-56 h-56 rounded-full bg-gradient-to-r from-emerald-400 to-blue-500 flex items-center justify-center shadow-xl">
+        <div className="w-36 h-36 rounded-full bg-white flex items-center justify-center text-[#021423] font-bold text-lg">
+          Mission
+        </div>
+      </div>
+
+      {/* CARDS */}
+      <div className="absolute -left-12 top-8 bg-white p-4 rounded-xl shadow-lg w-52">
+        <h4 className="font-semibold text-[#021423]">Affordable Solar</h4>
+        <p className="text-gray-600 text-sm mt-1">
+          Providing cost-effective solar solutions.
+        </p>
+      </div>
+
+      <div className="absolute -right-12 bottom-8 bg-white p-4 rounded-xl shadow-lg w-52">
+        <h4 className="font-semibold text-[#021423]">Expert Installation</h4>
+        <p className="text-gray-600 text-sm mt-1">
+          High-quality engineering and reliable systems.
+        </p>
+      </div>
+
+    </motion.div>
+
+    {/* TEXT */}
+    <motion.div
+      initial={{ opacity: 0, x: 60 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+    >
+      <p className="text-blue-600 uppercase tracking-widest font-semibold text-sm">
+        Our Mission
+      </p>
+
+      <h2 className="mt-4 text-4xl font-bold text-[#021423] leading-tight">
+        Delivering Reliable
+        <span className="block text-blue-600">
+          Solar Power Solutions
+        </span>
+      </h2>
+
+      <p className="mt-6 text-gray-600 leading-relaxed max-w-xl">
+        Our mission is to empower households and businesses with
+        dependable solar technology while reducing electricity
+        costs and environmental impact. We focus on quality
+        installations, expert engineering, and long-term customer trust.
+      </p>
+    </motion.div>
+
+  </div>
+</section>
+
  <section className="relative bg-white overflow-hidden">
       {/* subtle gradient glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-50 via-white to-emerald-50 pointer-events-none" />
