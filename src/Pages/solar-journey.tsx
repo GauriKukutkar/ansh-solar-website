@@ -158,7 +158,7 @@ export default function SolarJourney() {
 
     try {
       const res = await fetch(
-        "http://localhost/solar-api/save_solar_lead.php",
+        "https://anshsolarelectricals.com/Backend/submit_lead.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
