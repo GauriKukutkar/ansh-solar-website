@@ -6,13 +6,11 @@ header("Access-Control-Allow-Methods: POST");
 
 /* ================= DATABASE ================= */
 
-/* ================= DATABASE ================= */
-
 $conn = new mysqli(
-"localhost",
-"o0kknxu366cb_Anshsolar_user",
-"Solar@20Ansh26_DB!",
-"o0kknxu366cb_Solar_db"
+    "localhost",
+    "o0kknxu366cb_Anshsolar_user",
+    "Solar@20Ansh26_DB!",
+    "o0kknxu366cb_Solar_db"
 );
 
 if ($conn->connect_error) {
