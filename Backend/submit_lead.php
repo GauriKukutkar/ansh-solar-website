@@ -108,32 +108,21 @@ $stmt->bind_param(
 
 if ($stmt->execute()) {
 
-    /* ================= EMAIL NOTIFICATION ================= */
-
     $to = "inquiry@anshsolarelectricals.com";
     $subject = "New Solar Lead - Ansh Solar Electricals";
 
-    $message = "
-New Solar Consultation Request
+    $message = "New Solar Lead Received\n\n";
+    $message .= "Name: $name\n";
+    $message .= "WhatsApp: $whatsapp\n";
+    $message .= "City: $city\n";
+    $message .= "Pincode: $pincode\n";
+    $message .= "Monthly Bill: ₹$bill\n";
+    $message .= "Category: $category\n";
+    $message .= "Approval: $approval\n";
 
-Name: $name
-Phone: $whatsapp
-City: $city
-Pincode: $pincode
-Monthly Bill: ₹$bill
-Category: $category
-Approval: $approval
-
-Submitted from website.
-";
-
-    $headers = "From: info@anshsolarelectricals.com\r\n";
-    $headers .= "Reply-To: info@anshsolarelectricals.com\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion();
+    $headers = "From: Ansh Solar Electricals <inquiry@anshsolarelectricals.com>";
 
     mail($to, $subject, $message, $headers);
-
-    /* ================= SUCCESS RESPONSE ================= */
 
     echo json_encode([
         "status" => "success",
