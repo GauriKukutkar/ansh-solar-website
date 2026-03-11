@@ -1,16 +1,25 @@
 <?php
+
+/* ================= HEADERS ================= */
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+
+/* Handle CORS preflight */
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 /* ================= DATABASE ================= */
 
 $conn = new mysqli(
-    "localhost",
-    "o0kknxu366cb_Anshsolar_user",
-    "Solar@20Ansh26_DB!",
-    "o0kknxu366cb_Solar_db"
+"localhost",
+"Anshsolar_user",
+"Solar@20Ansh26_DB!",
+"Solar_db"
 );
 
 if ($conn->connect_error) {
@@ -23,7 +32,8 @@ if ($conn->connect_error) {
 
 /* ================= GET JSON DATA ================= */
 
-$data = json_decode(file_get_contents("php://input"), true);
+$rawInput = file_get_contents("php://input");
+$data = json_decode($rawInput, true);
 
 if (!$data) {
     echo json_encode([
@@ -45,13 +55,7 @@ $category  = trim($data['category'] ?? '');
 
 /* ================= VALIDATION ================= */
 
-if (
-    $name === '' ||
-    $whatsapp === '' ||
-    $city === '' ||
-    $pincode === '' ||
-    $category === ''
-) {
+if ($name === '' || $whatsapp === '' || $city === '' || $pincode === '' || $category === '') {
     echo json_encode([
         "status" => "error",
         "message" => "Required fields missing"
@@ -59,7 +63,7 @@ if (
     exit;
 }
 
-/* WhatsApp basic validation */
+/* WhatsApp validation */
 if (!preg_match('/^[0-9]{10}$/', $whatsapp)) {
     echo json_encode([
         "status" => "error",
@@ -68,7 +72,7 @@ if (!preg_match('/^[0-9]{10}$/', $whatsapp)) {
     exit;
 }
 
-/* Bill validation */
+/* Bill minimum */
 if ($bill < 500) {
     $bill = 500;
 }
@@ -76,8 +80,8 @@ if ($bill < 500) {
 /* ================= INSERT QUERY ================= */
 
 $sql = "INSERT INTO solar_leads
-(name, whatsapp, city, pincode, approval, bill, category, created_at)
-VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+(name, whatsapp, city, pincode, approval, bill, category)
+VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 
@@ -89,10 +93,6 @@ if (!$stmt) {
     exit;
 }
 
-/*
-s = string
-i = integer
-*/
 $stmt->bind_param(
     "sssssis",
     $name,
@@ -108,6 +108,33 @@ $stmt->bind_param(
 
 if ($stmt->execute()) {
 
+    /* ================= EMAIL NOTIFICATION ================= */
+
+    $to = "inquiry@anshsolarelectricals.com";
+    $subject = "New Solar Lead - Ansh Solar Electricals";
+
+    $message = "
+New Solar Consultation Request
+
+Name: $name
+Phone: $whatsapp
+City: $city
+Pincode: $pincode
+Monthly Bill: ₹$bill
+Category: $category
+Approval: $approval
+
+Submitted from website.
+";
+
+    $headers = "From: info@anshsolarelectricals.com\r\n";
+    $headers .= "Reply-To: info@anshsolarelectricals.com\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
+
+    mail($to, $subject, $message, $headers);
+
+    /* ================= SUCCESS RESPONSE ================= */
+
     echo json_encode([
         "status" => "success",
         "message" => "Solar consultation request submitted ☀️"
@@ -119,10 +146,12 @@ if ($stmt->execute()) {
         "status" => "error",
         "message" => "Database insert failed"
     ]);
+
 }
 
 /* ================= CLEANUP ================= */
 
 $stmt->close();
 $conn->close();
+
 ?>

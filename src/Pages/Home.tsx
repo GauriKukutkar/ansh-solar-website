@@ -12,7 +12,7 @@ import polycab from "../assets/polycab.png";
 import nova from "../assets/nova.png";
 import vikram from "../assets/vikram.png";
 import utl from "../assets/utl.avif";
-import tata from "../assets/tata.png";
+// import tata from "../assets/tata.png";
 
 export default function Home() {
 
@@ -643,7 +643,7 @@ Smart Solar Solutions for Modern India
           nova,
           vikram,
           utl,
-          tata,
+          // tata,
 
           // duplicate for seamless loop
           adani,
@@ -651,7 +651,7 @@ Smart Solar Solutions for Modern India
           nova,
           vikram,
           utl,
-          tata,
+          // tata,
         ].map((logo, i) => (
           <div
             key={i}
