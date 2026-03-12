@@ -110,7 +110,7 @@ export default function Header() {
               <div className="absolute text-black top-12 left-0 w-64 bg-white border shadow-xl rounded-xl p-3 space-y-1 z-[1000]">
 
     {[
-      { name: "Maintenance", path: "/energy/maintenance" },
+      { name: "Solar Calculator", path: "/solar-calculator" },
       { name: "Monitoring", path: "/energy/monitoring" },
       { name: "System Upgrade", path: "/energy/upgrade" },
       { name: "Consultation", path: "/energy/consultation" },

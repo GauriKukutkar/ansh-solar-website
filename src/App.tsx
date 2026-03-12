@@ -13,6 +13,7 @@ import SolarJourney from "./Pages/solar-journey";
 import Residential from "./Pages/residential";
 import Industries from "./Pages/industries";
 import Agriculture from "./Pages/agriculture";
+import SolarCalculator from "./Pages/solar-calculator";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
   <Route path="/residential" element={<Residential />} />
   <Route path="/industries" element={<Industries />} />
   <Route path="/agriculture" element={<Agriculture />} />
+  <Route path="/solar-calculator" element={<SolarCalculator />} />
 </Route>
 
       </Routes>
