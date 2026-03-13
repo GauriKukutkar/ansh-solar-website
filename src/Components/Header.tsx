@@ -112,8 +112,8 @@ export default function Header() {
     {[
       { name: "Solar Calculator", path: "/solar-calculator" },
       { name: "Roof-Suitability Checker", path: "/RoofSuitabilityChecker" },
-      { name: "System Upgrade", path: "/energy/upgrade" },
-      { name: "Consultation", path: "/energy/consultation" },
+      // { name: "Maintenance", path: "/Maintenance" },
+      // { name: "Consultation", path: "/energy/consultation" },
     ].map((item) => (
       <NavLink
         key={item.name}
@@ -203,10 +203,10 @@ export default function Header() {
 
       {openDropdown === "care" && (
         <div className="pl-5 mt-3 space-y-3 text-gray-600 border-l-2 border-blue-100">
-          <NavLink to="/maintenance" className="block hover:text-blue-600 transition">Maintenance</NavLink>
-          <NavLink to="/monitoring" className="block hover:text-blue-600 transition">Monitoring</NavLink>
-          <NavLink to="/upgrade" className="block hover:text-blue-600 transition">System Upgrade</NavLink>
-          <NavLink to="/consultation" className="block hover:text-blue-600 transition">Consultation</NavLink>
+          <NavLink to="/Solar-Calculator" className="block hover:text-blue-600 transition">Solar Calculator</NavLink>
+          <NavLink to="/RoofSuitabilityChecker" className="block hover:text-blue-600 transition">Roof Suitability Checker</NavLink>
+          {/* <NavLink to="/upgrade" className="block hover:text-blue-600 transition">System Upgrade</NavLink>
+          <NavLink to="/consultation" className="block hover:text-blue-600 transition">Consultation</NavLink> */}
         </div>
       )}
     </div>

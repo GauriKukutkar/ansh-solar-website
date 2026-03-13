@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import blog1 from "../assets/blog1.jpeg";
-import blog2 from "../assets/blog2.jpeg";
-import blog3 from "../assets/blog3.jpeg";
-import blog4 from "../assets/blog4.jpeg";
-import blog5 from "../assets/blog5.jpeg";
+import blog1 from "../assets/blog6.jpg";
+import blog2 from "../assets/blog2.jpg";
+import blog3 from "../assets/blog3.jpg";
+import blog4 from "../assets/blog4.jpg";
+import blog5 from "../assets/blog5.jpg";
 import societyImg from "../assets/society.jpg";
 import homeImg from "../assets/home.jpg";
 import villaImg from "../assets/villas.jpg";
@@ -150,6 +150,86 @@ export default function Blog() {
         </div>
       </div>
     </section>
+
+{/* <section className="bg-white pt-32 pb-24 px-6 overflow-hidden">
+
+  <div className="max-w-7xl mx-auto">
+
+
+
+    <motion.div
+      initial={{ opacity: 0, y: 60 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="text-center max-w-4xl mx-auto"
+    >
+
+      <h1 className="text-4xl sm:text-5xl font-bold text-[#021423] leading-tight">
+        Insights on
+        <span className="text-sky-500"> Rooftop Solar</span>
+      </h1>
+
+      <p className="mt-6 text-gray-600 text-lg leading-relaxed">
+        Expert insights, solar trends, installation guides and energy
+        innovations helping you make smarter sustainable decisions.
+      </p>
+
+    </motion.div>
+
+
+ 
+
+    <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+
+      {[blog1, blog2, blog3, blog4, blog5].map((img, index) => (
+
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition"
+        >
+
+  
+
+          <div className="h-[200px] overflow-hidden">
+
+            <img
+              src={img}
+              alt="Solar Blog"
+              className="w-full h-full object-cover hover:scale-105 transition duration-500"
+            />
+
+          </div>
+
+   
+
+          <div className="p-5">
+
+            <h3 className="text-lg font-semibold text-gray-800">
+              Solar Installation Guide
+            </h3>
+
+            <p className="text-gray-500 text-sm mt-2">
+              Learn how rooftop solar systems work and how they reduce
+              electricity costs for homeowners.
+            </p>
+
+          </div>
+
+        </motion.div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section> */}
 
     <section className="bg-[#f8fbff] py-24 px-6">
       <div className="max-w-7xl mx-auto">
