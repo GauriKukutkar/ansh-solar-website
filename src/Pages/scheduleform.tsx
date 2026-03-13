@@ -23,17 +23,23 @@ const ScheduleForm = () => {
         method: "POST",
         body: formData,
       });
+
       const data = await res.json();
+      console.log("Backend response:", data); // log backend response for debugging
 
       if (data.status === "success") {
-        alert("Consultation booked successfully!");
+        alert(data.message || "Consultation booked successfully!");
+        // Reset form fields
+        e.currentTarget.reset();
+        setSelectedDate("");
+        setSelectedTime("");
         setShowModal(false);
       } else {
-        alert("Error submitting form. Please try again.");
+        alert(data.message || "Error submitting form. Please try again.");
       }
     } catch (err) {
-      console.error(err);
-      alert("Something went wrong.");
+      console.error("Submit error:", err);
+      alert("Something went wrong. Check console for details.");
     }
   };
 
