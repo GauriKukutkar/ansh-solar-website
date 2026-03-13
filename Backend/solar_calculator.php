@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
@@ -12,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 /* ================= DATABASE ================= */
 
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 $conn = new mysqli(
     "localhost",
     "Anshsolar_user",
@@ -20,12 +24,10 @@ $conn = new mysqli(
 );
 
 if ($conn->connect_error) {
-
     echo json_encode([
         "status"=>"error",
         "message"=>"Database connection failed"
     ]);
-
     exit;
 }
 
@@ -34,12 +36,10 @@ if ($conn->connect_error) {
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!$data) {
-
     echo json_encode([
         "status"=>"error",
         "message"=>"Invalid request"
     ]);
-
     exit;
 }
 
@@ -78,7 +78,6 @@ if ($name == "" || $phone == "" || $city == "") {
         "status"=>"error",
         "message"=>"Missing user details"
     ]);
-
     exit;
 }
 
@@ -88,7 +87,6 @@ if (!preg_match('/^[0-9]{10}$/',$phone)) {
         "status"=>"error",
         "message"=>"Invalid phone number"
     ]);
-
     exit;
 }
 
@@ -98,7 +96,6 @@ if ($bill <= 0) {
         "status"=>"error",
         "message"=>"Invalid electricity bill"
     ]);
-
     exit;
 }
 
@@ -157,6 +154,8 @@ if($yearly_savings > 0){
     $payback = round($net_cost / $yearly_savings,1);
 }
 
+$solar_profit_25yrs = ($yearly_savings * 25) - $net_cost;
+
 /* ================= SAVE LEAD ================= */
 
 $sql = "INSERT INTO solar_calculator_leads
@@ -187,8 +186,18 @@ VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $stmt = $conn->prepare($sql);
 
+if(!$stmt){
+    echo json_encode([
+        "status"=>"error",
+        "message"=>$conn->error
+    ]);
+    exit;
+}
+
+/* Correct datatype mapping (21 fields) */
+
 $stmt->bind_param(
-"ssssssiisddidssidds",
+"ssssssiisidiisdisidds",
 
 $name,
 $phone,
@@ -216,12 +225,13 @@ $farm_area
 if(!$stmt->execute()){
     echo json_encode([
         "status"=>"error",
-        "message"=>"Database insert failed"
+        "message"=>$stmt->error
     ]);
     exit;
 }
 
 /* ================= RESPONSE ================= */
+
 echo json_encode([
 
     "status"=>"success",
@@ -233,7 +243,8 @@ echo json_encode([
     "payback"=>$payback,
 
     "monthly_savings"=>$monthly_savings,
-    "yearly_savings"=>$yearly_savings
+    "yearly_savings"=>$yearly_savings,
+    "solar_profit_25yrs"=>number_format($solar_profit_25yrs,0)
 
 ]);
 

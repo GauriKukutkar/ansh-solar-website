@@ -9,6 +9,7 @@ type SolarResult = {
   payback: number;
   yearly_savings: number;
   monthly_savings: number;
+  solar_profit_25yrs: string;
 };
 
 export default function SolarCalculator(){
@@ -480,6 +481,13 @@ className="mt-6 grid md:grid-cols-3 gap-6"
 <p className="mt-2 text-sm text-gray-500">
 Yearly Savings: ₹ {result.yearly_savings?.toLocaleString()}
 </p>
+</div>
+
+<div className="bg-green-100 p-6 rounded-xl text-center">
+<p>25 Year Solar Profit</p>
+<h3 className="text-xl font-bold text-green-700">
+₹ {result.solar_profit_25yrs}
+</h3>
 </div>
 
 </motion.div>
