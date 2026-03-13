@@ -177,14 +177,15 @@ Smart Solar Solutions for Modern India
         className="pt-2"
       >
         <button
-          className="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600
-                     text-white font-semibold
-                     px-6 py-3 rounded-lg
-                     hover:scale-[1.03] active:scale-[0.97]
-                     transition-all duration-200 shadow-lg"
-        >
-          Get Quote
-        </button>
+  onClick={() => window.location.href = '/solar-journey'}
+  className="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600
+             text-white font-semibold
+             px-6 py-3 rounded-lg
+             hover:scale-[1.03] active:scale-[0.97]
+             transition-all duration-200 shadow-lg"
+>
+  Get Quote
+</button>
       </motion.div>
 
     </div>

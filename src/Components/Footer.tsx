@@ -27,6 +27,7 @@ export default function Footer() {
           src={logo}
           className="h-24 object-contain transition-transform duration-300 hover:scale-105"
           alt="Ansh Solar Electricals Logo"
+           onClick={() => window.location.href = '/'}
         />
 
         <p className="text-sm text-gray-300 leading-relaxed">

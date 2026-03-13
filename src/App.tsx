@@ -15,32 +15,32 @@ import Industries from "./Pages/industries";
 import Agriculture from "./Pages/agriculture";
 import SolarCalculator from "./Pages/solar-calculator";
 import RoofSuitabilityChecker from "./Pages/RoofSuitabilityChecker";
+import ScheduleForm from "./Pages/scheduleform"; // adjust path as needed
 
 export default function App() {
   return (
     <BrowserRouter>
-
       <ScrollToTop />
 
+      {/* Modal form will pop up on every page load */}
+      <ScheduleForm />
+
       <Routes>
-
-        {/* Layout Wrapper */}
         <Route element={<MainLayout />}>
-  <Route path="/" element={<Home />} />
-  <Route path="/about" element={<About />} />
-  <Route path="/blog" element={<Blog />} />
-  <Route path="/contact" element={<Contact />} />
-  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-  <Route path="/terms-conditions" element={<TermsConditions />} />
-  <Route path="/refund-policy" element={<RefundPolicy />} />
-  <Route path="/solar-journey" element={<SolarJourney />} />
-  <Route path="/residential" element={<Residential />} />
-  <Route path="/industries" element={<Industries />} />
-  <Route path="/agriculture" element={<Agriculture />} />
-  <Route path="/solar-calculator" element={<SolarCalculator />} />
-  <Route path="/roofSuitabilityChecker" element={<RoofSuitabilityChecker />} />
-</Route>
-
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-conditions" element={<TermsConditions />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/solar-journey" element={<SolarJourney />} />
+          <Route path="/residential" element={<Residential />} />
+          <Route path="/industries" element={<Industries />} />
+          <Route path="/agriculture" element={<Agriculture />} />
+          <Route path="/solar-calculator" element={<SolarCalculator />} />
+          <Route path="/roofSuitabilityChecker" element={<RoofSuitabilityChecker />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

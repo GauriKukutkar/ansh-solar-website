@@ -53,11 +53,12 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 h-[80px] flex items-center justify-between">
 
         {/* LOGO */}
-        <img
-          src={logo}
-          className="h-16 lg:h-19 object-contain"
-          alt="Ansh Solar Electricals Logo"
-        />
+<img
+  src={logo}
+  alt="Ansh Solar Electricals Logo"
+  className="h-16 lg:h-19 object-contain cursor-pointer"
+  onClick={() => window.location.href = '/'}
+/>
 
         {/* DESKTOP MENU */}
         <nav className="hidden lg:flex items-center gap-8 text-[16px]">
