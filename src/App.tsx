@@ -14,6 +14,7 @@ import Residential from "./Pages/residential";
 import Industries from "./Pages/industries";
 import Agriculture from "./Pages/agriculture";
 import SolarCalculator from "./Pages/solar-calculator";
+import RoofSuitabilityChecker from "./Pages/RoofSuitabilityChecker";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
   <Route path="/industries" element={<Industries />} />
   <Route path="/agriculture" element={<Agriculture />} />
   <Route path="/solar-calculator" element={<SolarCalculator />} />
+  <Route path="/roofSuitabilityChecker" element={<RoofSuitabilityChecker />} />
 </Route>
 
       </Routes>

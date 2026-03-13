@@ -111,7 +111,7 @@ export default function Header() {
 
     {[
       { name: "Solar Calculator", path: "/solar-calculator" },
-      { name: "Monitoring", path: "/energy/monitoring" },
+      { name: "Roof-Suitability Checker", path: "/RoofSuitabilityChecker" },
       { name: "System Upgrade", path: "/energy/upgrade" },
       { name: "Consultation", path: "/energy/consultation" },
     ].map((item) => (
