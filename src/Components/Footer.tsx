@@ -139,7 +139,7 @@ export default function Footer() {
           <div className="flex items-start gap-3
             hover:text-white transition duration-300">
             <Phone size={18} className="text-green-400 mt-[2px] shrink-0"/>
-            <span>+91 7249709662</span>
+            <span>+91 7057408223</span>
           </div>
 
           <div className="flex items-start gap-3

@@ -2,6 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -45,6 +46,9 @@ $shadow_level = trim($_POST["shadowLevel"] ?? "");
 $roof_condition = trim($_POST["roofCondition"] ?? "");
 $roof_access = trim($_POST["roofAccess"] ?? "");
 
+$roof_tilt = trim($_POST["roofTilt"] ?? "");
+$bill_range = trim($_POST["billRange"] ?? "");
+
 $roof_photo = "";
 
 /* ================= VALIDATION ================= */
@@ -80,9 +84,9 @@ if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0){
     $filename = time()."_".basename($_FILES["photo"]["name"]);
     $target_file = $target_dir.$filename;
 
-    move_uploaded_file($_FILES["photo"]["tmp_name"],$target_file);
-
-    $roof_photo = $filename;
+    if(move_uploaded_file($_FILES["photo"]["tmp_name"],$target_file)){
+        $roof_photo = $filename;
+    }
 }
 
 /* ================= SOLAR CALCULATION ================= */
@@ -135,8 +139,16 @@ VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $stmt = $conn->prepare($sql);
 
+if(!$stmt){
+    echo json_encode([
+        "status"=>"error",
+        "message"=>"SQL prepare failed"
+    ]);
+    exit;
+}
+
 $stmt->bind_param(
-"ssssssisssssdiss",
+"ssssssisssssdis",
 $name,
 $phone,
 $city,
@@ -165,14 +177,13 @@ if(!$stmt->execute()){
 /* ================= RESPONSE ================= */
 
 echo json_encode([
-
 "status"=>"success",
 "estimated_kw"=>$estimated_kw,
 "panels"=>$panels,
 "suitability_result"=>$suitability
-
 ]);
 
 $stmt->close();
 $conn->close();
+
 ?>
