@@ -19,7 +19,7 @@ const ScheduleForm = () => {
     const formData = new FormData(e.currentTarget);
 
     try {
-      const res = await fetch("/save_consultation.php", {
+        const res = await fetch("https://anshsolarelectricals.com/Backend/save_consultation.php", {
         method: "POST",
         body: formData,
       });
