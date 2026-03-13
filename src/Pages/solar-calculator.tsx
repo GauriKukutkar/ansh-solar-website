@@ -22,7 +22,7 @@ export default function SolarCalculator(){
 
   const [month,setMonth] = useState("");
 
-  const [bill,setBill] = useState<number>(3000);
+const [bill, setBill] = useState<number | string>(3000);
   const [units,setUnits] = useState<number>(200);
 
   const [businessName,setBusinessName] = useState("");
@@ -41,7 +41,7 @@ export default function SolarCalculator(){
   const [loading,setLoading] = useState(false);
   const [result,setResult] = useState<SolarResult | null>(null);
 
-  const yearlyBill = bill * 12;
+const yearlyBill = Number(bill || 0) * 12;
 
   const calculateSolar = async () => {
 
@@ -210,18 +210,22 @@ className="border rounded-xl p-3 w-full mb-6"
 {propertyType === "Residential" && (
 
 <div className="mb-6">
-  <label className="block text-sm font-semibold text-gray-700 mb-2">
+<label className="block text-sm font-semibold text-gray-700 mb-2">
 Enter Monthly Electricity Bill ₹
 </label>
+
 <input
 type="number"
 value={bill}
-onChange={(e)=>setBill(Number(e.target.value))}
+onChange={(e)=>{
+const val = e.target.value;
+setBill(val === "" ? "" : Number(val));
+}}
 placeholder="Enter Monthly Electricity Bill ₹"
 className="border rounded-xl p-3 w-full"
 />
-</div>
 
+</div>
 )}
 
 {/* COMMERCIAL */}
@@ -430,8 +434,8 @@ Solar Feasibility Report
 <p><strong>City:</strong> {city}</p>
 <p><strong>Property Type:</strong> {propertyType}</p>
 <p><strong>Selected Month:</strong> {month}</p>
-<p><strong>Monthly Bill:</strong> ₹ {bill}</p>
-<p><strong>Estimated Yearly Cost:</strong> ₹ {yearlyBill}</p>
+<p><strong>Monthly Bill:</strong> ₹ {Number(bill || 0).toLocaleString()}</p>
+<p><strong>Estimated Yearly Cost:</strong> ₹ {yearlyBill.toLocaleString()}</p>
 
 </div>
 

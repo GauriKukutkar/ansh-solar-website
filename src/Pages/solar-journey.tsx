@@ -125,25 +125,53 @@ export default function SolarJourney() {
   /* ================= BILL SLIDER ================= */
 
   const BillSlider = () => (
-    <div>
-      <label className="text-sm text-gray-600 font-semibold">
-        Monthly Electricity Bill
-      </label>
+    <div className="mt-8">
 
-      <input
-        type="range"
-        min={500}
-        max={20000}
-        step={500}
-        value={bill}
-        onChange={(e) => setBill(Number(e.target.value))}
-        className="w-full mt-3 accent-blue-600"
-      />
+<label className="block text-sm font-semibold text-gray-700 mb-3">
+Monthly Electricity Bill
+</label>
 
-      <p className="text-blue-600 font-semibold mt-2">
-        ₹ {bill.toLocaleString()} / month
-      </p>
-    </div>
+<div
+className="relative w-full h-3 bg-gray-200 rounded-full cursor-pointer"
+onClick={(e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  const newBill = Math.round(500 + percent * (20000 - 500));
+  setBill(newBill);
+}}
+>
+
+{/* Progress Track */}
+<div
+className="absolute top-0 left-0 h-3 bg-blue-600 rounded-full transition-all"
+style={{ width: `${((bill - 500) / (20000 - 500)) * 100}%` }}
+></div>
+
+{/* Thumb */}
+<div
+className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-blue-600 rounded-full shadow-md"
+style={{ left: `${((bill - 500) / (20000 - 500)) * 100}%`, transform: "translate(-50%, -50%)" }}
+></div>
+
+</div>
+
+<motion.div
+key={bill}
+initial={{ scale: 0.9, opacity: 0 }}
+animate={{ scale: 1, opacity: 1 }}
+transition={{ duration: 0.2 }}
+className="text-center mt-4"
+>
+
+<p className="text-sm text-gray-500">Your Monthly Bill</p>
+
+<h3 className="text-3xl font-bold text-blue-600">
+₹ {bill.toLocaleString()}
+</h3>
+
+</motion.div>
+
+</div>
   );
 
   /* ================= SUBMIT ================= */
