@@ -41,6 +41,70 @@ export default function Contact() {
     "Other",
   ];
 
+  const [serviceName,setServiceName] = useState("");
+const [servicePhone,setServicePhone] = useState("");
+const [serviceEmail,setServiceEmail] = useState("");
+const [servicePincode,setServicePincode] = useState("");
+const [serviceCity,setServiceCity] = useState("");
+const [serviceMessage,setServiceMessage] = useState("");
+
+const [serviceSuccess,setServiceSuccess] = useState(false);
+const [serviceLoading,setServiceLoading] = useState(false);
+
+const submitServiceRequest = async (e:any) => {
+
+e.preventDefault();
+
+if(!serviceName || !servicePhone || !servicePincode || !serviceCity){
+alert("Please fill required fields");
+return;
+}
+
+setServiceLoading(true);
+
+try{
+
+const res = await fetch(
+"https://anshsolarelectricals.com/Backend/service_request.php",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+name:serviceName,
+phone:servicePhone,
+email:serviceEmail,
+pincode:servicePincode,
+city:serviceCity,
+serviceType:serviceType,
+message:serviceMessage
+})
+}
+);
+
+const data = await res.json();
+
+if(data.status === "success"){
+
+setServiceSuccess(true);
+
+setServiceName("");
+setServicePhone("");
+setServiceEmail("");
+setServicePincode("");
+setServiceCity("");
+setServiceMessage("");
+
+}
+
+}catch(err){
+alert("Server error");
+}
+
+setServiceLoading(false);
+
+};
   return (
     <>
       {/* ================= HERO SECTION ================= */}
@@ -142,62 +206,105 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Form */}
-            <form className="space-y-4">
-              <input
-                type="text"
-                placeholder="Full Name"
-                required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
-              />
+            <form onSubmit={submitServiceRequest} className="space-y-4">
 
-              <input
-                type="tel"
-                placeholder="Phone Number"
-                required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
-              />
+<input
+type="text"
+placeholder="Full Name"
+required
+value={serviceName}
+onChange={(e)=>setServiceName(e.target.value)}
+className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
+/>
 
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
-              />
+<input
+type="tel"
+placeholder="Phone Number"
+required
+value={servicePhone}
+onChange={(e)=>setServicePhone(e.target.value)}
+className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
+/>
 
-              <div className="grid sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="Installation Pincode"
-                  required
-                  className="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
-                />
+<input
+type="email"
+placeholder="Email Address"
+value={serviceEmail}
+onChange={(e)=>setServiceEmail(e.target.value)}
+className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
+/>
 
-                <input
-                  type="text"
-                  placeholder="City"
-                  required
-                  className="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
-                />
-              </div>
+<div className="grid sm:grid-cols-2 gap-4">
 
-              <textarea
-                rows={4}   // ✅ FIXED
-                placeholder={`Describe your ${serviceType} issue...`}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
-              />
+<input
+type="text"
+placeholder="Installation Pincode"
+required
+value={servicePincode}
+onChange={(e)=>setServicePincode(e.target.value)}
+className="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
+/>
 
-              <button
-                type="submit"
-                className="w-full bg-emerald-500 hover:bg-emerald-600 
-                           text-white font-semibold py-3 rounded-lg 
-                           transition duration-300 shadow-md"
-              >
-                Submit Service Request
-              </button>
-            </form>
+<input
+type="text"
+placeholder="City"
+required
+value={serviceCity}
+onChange={(e)=>setServiceCity(e.target.value)}
+className="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
+/>
+
+</div>
+
+<textarea
+rows={4}
+placeholder={`Describe your ${serviceType} issue...`}
+value={serviceMessage}
+onChange={(e)=>setServiceMessage(e.target.value)}
+className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-400 outline-none"
+/>
+
+<button
+type="submit"
+disabled={serviceLoading}
+className="w-full bg-emerald-500 hover:bg-emerald-600
+text-white font-semibold py-3 rounded-lg
+transition duration-300 shadow-md"
+>
+{serviceLoading ? "Submitting..." : "Submit Service Request"}
+</button>
+
+</form>
           </div>
         </div>
       </section>
+
+      {serviceSuccess && (
+
+<div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+
+<div className="bg-white rounded-2xl p-8 shadow-xl text-center max-w-sm">
+
+<h3 className="text-xl font-bold text-gray-900">
+Request Submitted
+</h3>
+
+<p className="text-gray-600 mt-2">
+Our solar service team will contact you shortly.
+</p>
+
+<button
+onClick={()=>setServiceSuccess(false)}
+className="mt-5 bg-emerald-500 text-white px-6 py-2 rounded-lg"
+>
+Close
+</button>
+
+</div>
+
+</div>
+
+)}
     </>
   );
 }

@@ -226,6 +226,7 @@ export default function AboutHero() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         viewport={{ once: true }}
+        onClick={() => window.location.href = '/solar-journey'}
         className="mt-8 bg-blue-500 hover:bg-blue-600 transition px-7 py-3 rounded-full font-semibold shadow-lg"
       >
         Start Your Solar Journey →

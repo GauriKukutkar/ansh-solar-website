@@ -27,6 +27,67 @@ const isTimeValid = () => {
 
   return selected > now;
 };
+const [name,setName] = useState("");
+const [phone,setPhone] = useState("");
+const [email,setEmail] = useState("");
+const [bill,setBill] = useState("");
+const [pincode,setPincode] = useState("");
+const [city,setCity] = useState("");
+
+const [loading,setLoading] = useState(false);
+const [success,setSuccess] = useState(false);
+
+const handleConsultation = async () => {
+
+  if(!name || !phone || !selectedDate || !selectedTime){
+    alert("Please fill required fields");
+    return;
+  }
+
+  setLoading(true);
+
+  try{
+
+    const formData = new FormData();
+
+    formData.append("name",name);
+    formData.append("phone",phone);
+    formData.append("email",email);
+    formData.append("date",selectedDate);
+    formData.append("time",selectedTime);
+    formData.append("bill",bill);
+    formData.append("pincode",pincode);
+    formData.append("city",city);
+
+    const res = await fetch(
+      "https://anshsolarelectricals.com/Backend/consultation_booking.php",
+      {
+        method:"POST",
+        body:formData
+      }
+    );
+
+    const data = await res.json();
+
+    if(data.status === "success"){
+      setSuccess(true);
+
+      setName("");
+      setPhone("");
+      setEmail("");
+      setBill("");
+      setPincode("");
+      setCity("");
+      setSelectedDate("");
+      setSelectedTime("");
+    }
+
+  }catch(err){
+    alert("Server connection failed");
+  }
+
+  setLoading(false);
+};
 const categories = ["General", "Installation", "Maintenance & Security"];
 
 const faqData = {
@@ -236,70 +297,147 @@ Smart Solar Solutions for Modern India
 </div>
 
     {/* ================= RIGHT FORM CARD ================= */}
-    <div className="glass-card rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.35)] p-6 sm:p-8 lg:p-10">
+<div className="glass-card rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.35)] p-6 sm:p-8 lg:p-10">
 
-      <h3 className="text-xl sm:text-2xl font-bold text-[#021423] mb-6">
-        Schedule Your Visit
-      </h3>
+  <h3 className="text-xl sm:text-2xl font-bold text-[#021423] mb-6">
+    Schedule Your Visit
+  </h3>
 
-      <div className="grid gap-4">
+  <div className="grid gap-4">
 
-        <input placeholder="Full Name" className="inputStyle" />
-        <input placeholder="Phone Number" className="inputStyle" type="tel" />
-        <input placeholder="Email Address" className="inputStyle" type="email" />
+    {/* NAME */}
+    <input
+      placeholder="Full Name"
+      className="inputStyle"
+      value={name}
+      onChange={(e)=>setName(e.target.value)}
+    />
 
-        {/* DATE + TIME */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label className="formLabel">Select Date</label>
-            <input
-              type="date"
-              className="inputStyle"
-              min={new Date().toISOString().split("T")[0]}
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-            />
-          </div>
+    {/* PHONE */}
+    <input
+      placeholder="Phone Number"
+      className="inputStyle"
+      type="tel"
+      value={phone}
+      onChange={(e)=>setPhone(e.target.value)}
+    />
 
-          <div>
-            <label className="formLabel">Select Time</label>
-            <input
-              type="time"
-              className="inputStyle"
-              value={selectedTime}
-              onChange={(e) => setSelectedTime(e.target.value)}
-            />
-          </div>
-        </div>
+    {/* EMAIL */}
+    <input
+      placeholder="Email Address"
+      className="inputStyle"
+      type="email"
+      value={email}
+      onChange={(e)=>setEmail(e.target.value)}
+    />
 
-        <select className="inputStyle">
-          <option>Monthly Electricity Bill</option>
-          <option>Below ₹1000</option>
-          <option>₹1000 – ₹3000</option>
-          <option>₹3000 – ₹5000</option>
-          <option>Above ₹5000</option>
-        </select>
+    {/* DATE + TIME */}
+    <div className="grid sm:grid-cols-2 gap-4">
 
-        <div className="grid grid-cols-2 gap-4">
-          <input placeholder="Pincode" className="inputStyle" />
-          <input placeholder="City" className="inputStyle" />
-        </div>
+      <div>
+        <label className="formLabel">Select Date</label>
 
-        <button
-          disabled={!selectedDate || !selectedTime || !isTimeValid()}
-          className="mt-4 w-full bg-gradient-to-r from-blue-600 via-sky-500 to-emerald-400
-                     text-white py-4 rounded-xl font-semibold
-                     shadow-lg hover:scale-[1.03]
-                     active:scale-[0.98]
-                     transition disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Confirm Consultation →
-        </button>
-
+        <input
+          type="date"
+          className="inputStyle"
+          min={new Date().toISOString().split("T")[0]}
+          value={selectedDate}
+          onChange={(e)=>setSelectedDate(e.target.value)}
+        />
       </div>
+
+      <div>
+        <label className="formLabel">Select Time</label>
+
+        <input
+          type="time"
+          className="inputStyle"
+          value={selectedTime}
+          onChange={(e)=>setSelectedTime(e.target.value)}
+        />
+      </div>
+
     </div>
+
+    {/* BILL RANGE */}
+    <select
+      className="inputStyle"
+      value={bill}
+      onChange={(e)=>setBill(e.target.value)}
+    >
+      <option value="">Monthly Electricity Bill</option>
+      <option value="Below ₹1000">Below ₹1000</option>
+      <option value="₹1000 – ₹3000">₹1000 – ₹3000</option>
+      <option value="₹3000 – ₹5000">₹3000 – ₹5000</option>
+      <option value="Above ₹5000">Above ₹5000</option>
+    </select>
+
+    {/* PINCODE + CITY */}
+    <div className="grid grid-cols-2 gap-4">
+
+      <input
+        placeholder="Pincode"
+        className="inputStyle"
+        value={pincode}
+        onChange={(e)=>setPincode(e.target.value)}
+      />
+
+      <input
+        placeholder="City"
+        className="inputStyle"
+        value={city}
+        onChange={(e)=>setCity(e.target.value)}
+      />
+
+    </div>
+
+    {/* SUBMIT BUTTON */}
+    <button
+      onClick={handleConsultation}
+      disabled={!selectedDate || !selectedTime || !isTimeValid() || loading}
+      className="mt-4 w-full bg-gradient-to-r from-blue-600 via-sky-500 to-emerald-400
+      text-white py-4 rounded-xl font-semibold
+      shadow-lg hover:scale-[1.03]
+      active:scale-[0.98]
+      transition disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+
+      {loading ? "Submitting..." : "Confirm Consultation →"}
+
+    </button>
+
+  </div>
+
+</div>
   </div>
 </section>
+
+{success && (
+
+<div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+
+  <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-sm">
+
+    <h3 className="text-xl font-bold text-[#021423] mb-3">
+      Consultation Booked!
+    </h3>
+
+    <p className="text-gray-600">
+      Our solar expert will contact you soon.
+    </p>
+
+    <button
+      onClick={()=>setSuccess(false)}
+      className="mt-5 bg-blue-600 text-white px-6 py-2 rounded-lg"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+)}
 
 {/* ================= FLOATING ABOUT AREA ================= */}
 <section
@@ -331,7 +469,8 @@ Smart Solar Solutions for Modern India
           reducing operational costs while building a cleaner tomorrow.
         </p>
 
-        <button className="mt-8 bg-blue-600 text-white px-7 py-3 rounded-full shadow hover:bg-blue-700 transition">
+        <button   onClick={() => window.location.href = '/solar-journey'}
+ className="mt-8 bg-blue-600 text-white px-7 py-3 rounded-full shadow hover:bg-blue-700 transition">
           Start Your Solar Journey
         </button>
       </div>
@@ -526,8 +665,9 @@ Smart Solar Solutions for Modern India
         </h2>
       </div>
 
-      <button className="group flex items-center gap-3 bg-[#021423] text-white px-7 py-3 rounded-full hover:bg-blue-600 transition-all duration-300 shadow-lg">
-        View All Services
+      <button   onClick={() => window.location.href = '/contact'}
+ className="group flex items-center gap-3 bg-[#021423] text-white px-7 py-3 rounded-full hover:bg-blue-600 transition-all duration-300 shadow-lg">
+        Know All Services
         <span className="bg-white text-blue-600 w-8 h-8 flex items-center justify-center rounded-full group-hover:rotate-90 transition">
           +
         </span>
@@ -558,7 +698,8 @@ Smart Solar Solutions for Modern India
             maximum savings and sustainable performance.
           </p>
 
-          <p className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
+          <p   onClick={() => window.location.href = '/residential'}
+ className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
             Learn more →
           </p>
         </div>
@@ -584,7 +725,7 @@ Smart Solar Solutions for Modern India
             for industries and commercial infrastructures.
           </p>
 
-          <p className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
+          <p onClick={() => window.location.href = '/industries'}  className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
             Learn more →
           </p>
         </div>
@@ -610,7 +751,7 @@ Smart Solar Solutions for Modern India
             ensuring peak solar efficiency year-round.
           </p>
 
-          <p className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
+          <p onClick={() => window.location.href = '/Privacy-policy'} className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
             Learn more →
           </p>
         </div>

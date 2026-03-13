@@ -11,7 +11,9 @@ import agricultureImg from "../assets/agriculture.jpg";
 import industryImg from "../assets/industry.jpg";
 import featured from "../assets/blog-featured.png";
 import { Sun, Zap, BarChart3, Battery } from "lucide-react";
-import { ArrowRight } from "lucide-react";
+// import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+
 
 export default function Blog() {
     const offerings = [
@@ -46,6 +48,44 @@ export default function Blog() {
     height: "h-[340px]",
   },
 ];
+
+const [newsletterEmail,setNewsletterEmail] = useState("");
+const [newsletterSuccess,setNewsletterSuccess] = useState(false);
+
+const subscribeNewsletter = async () => {
+
+if(!newsletterEmail){
+alert("Please enter your email");
+return;
+}
+
+try{
+
+const res = await fetch(
+"https://anshsolarelectricals.com/Backend/newsletter_subscribe.php",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+email:newsletterEmail
+})
+}
+);
+
+const data = await res.json();
+
+if(data.status === "success"){
+setNewsletterSuccess(true);
+setNewsletterEmail("");
+}
+
+}catch(err){
+alert("Server error");
+}
+
+};
   return (
     <>
      <section className="bg-white pt-32 pb-24 px-6 overflow-hidden">
@@ -273,56 +313,89 @@ export default function Blog() {
                 How Rooftop Solar Reduces Electricity Bills by 70%
               </h3>
 
-              <p className="text-gray-600 mt-4 leading-relaxed">
-                Learn how solar panels generate long-term savings, reduce dependency on grid power,
-                and increase property value.
-              </p>
+             <p className="text-gray-600 mt-4 leading-relaxed">
+  Learn how solar panels generate long-term savings, reduce dependency on grid power,
+  increase property value, and help you transition toward clean renewable energy for
+  a more sustainable future.
+</p>
 
-              <button className="mt-6 text-sky-600 font-semibold hover:underline">
-                Read Full Article →
-              </button>
+<button onClick={() => window.location.href = '/residential'}
+ className="mt-6 text-sky-600 font-semibold hover:underline">
+  Explore the Complete Guide to Solar Savings →
+</button>
             </div>
           </motion.div>
 
           {/* ================= LATEST LIST RIGHT ================= */}
-          <div className="space-y-6">
+<div className="space-y-6">
 
-            {[blog1, blog3, blog5].map((img, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: 60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex gap-5 bg-white rounded-2xl p-4 shadow-md hover:shadow-lg transition"
-              >
-                <img
-                  src={img}
-                  alt="Blog"
-                  className="w-28 h-28 object-cover rounded-xl"
-                />
+{[
+  {
+    img: blog1,
+    category: "Solar Guide",
+    title: "Top 5 Benefits of Installing Solar Panels in Maharashtra",
+    read: "5 min read"
+  },
+  {
+    img: blog3,
+    category: "Energy Savings",
+    title: "How Rooftop Solar Reduces Your Electricity Bill by 90%",
+    read: "4 min read"
+  },
+  {
+    img: blog5,
+    category: "Solar Technology",
+    title: "On-Grid vs Off-Grid Solar Systems: Which One is Better?",
+    read: "6 min read"
+  },
+  {
+    img: blog2,
+    category: "Solar Installation",
+    title: "Step-by-Step Process of Installing Rooftop Solar Panels",
+    read: "5 min read"
+  }
+].map((blog, index) => (
 
-                <div>
-                  <p className="text-xs text-sky-500 font-semibold uppercase">
-                    Solar Guide
-                  </p>
+<motion.div
+key={index}
+initial={{ opacity: 0, x: 60 }}
+whileInView={{ opacity: 1, x: 0 }}
+transition={{ duration: 0.6, delay: index * 0.1 }}
+viewport={{ once: true }}
+onClick={() => window.location.href = '/contact'}
+className="flex gap-5 bg-white rounded-2xl p-4 shadow-md hover:shadow-lg transition"
+>
 
-                  <h4 className="font-bold text-[#021423] mt-1 text-sm">
-                    Top 5 Benefits of Installing Solar Panels in Maharashtra
-                  </h4>
+<img
+src={blog.img}
+alt="Solar Blog"
+className="w-28 h-28 object-cover rounded-xl"
+/>
 
-                  <p className="text-gray-500 text-xs mt-2">
-                    5 min read
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+<div>
+<p className="text-xs text-sky-500 font-semibold uppercase">
+{blog.category}
+</p>
 
-          </div>
+<h4 className="font-bold text-[#021423] mt-1 text-sm leading-snug">
+{blog.title}
+</h4>
+
+<p className="text-gray-500 text-xs mt-2">
+{blog.read}
+</p>
+</div>
+
+</motion.div>
+
+))}
+
+</div>
 
         </div>
       </div>
     </section>
+
 <section className="bg-white py-24 px-6">
       <div className="max-w-7xl mx-auto">
 
@@ -366,12 +439,12 @@ export default function Blog() {
                 <p className="text-white/80 text-sm mt-2">
                   {item.desc}
                 </p>
-                <a
-                  href="#"
+                {/* <a
+                  onClick={() => window.location.href = '/residential'}
                   className="inline-flex items-center gap-2 text-sky-400 mt-4 font-medium hover:gap-3 transition-all"
                 >
                   See More <ArrowRight size={16} />
-                </a>
+                </a> */}
               </div>
             </motion.div>
           ))}
@@ -402,12 +475,12 @@ export default function Blog() {
                   <p className="text-white/80 text-sm mt-2">
                     {item.desc}
                   </p>
-                  <a
-                    href="#"
+                  {/* <a
+                    onClick={() => window.location.href = '/ind'}
                     className="inline-flex items-center gap-2 text-sky-400 mt-4 font-medium hover:gap-3 transition-all"
                   >
                     See More <ArrowRight size={16} />
-                  </a>
+                  </a> */}
                 </div>
               </motion.div>
             ))}
@@ -485,36 +558,73 @@ export default function Blog() {
 
         </div>
 
-        {/* NEWSLETTER CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-24 bg-gradient-to-r from-sky-500 to-emerald-500 rounded-3xl p-12 text-white text-center"
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold">
-            Stay Updated With Solar Insights
-          </h3>
+        /* NEWSLETTER CTA */
+<motion.div
+initial={{ opacity: 0, y: 50 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8 }}
+viewport={{ once: true }}
+className="mt-24 bg-gradient-to-r from-sky-500 to-emerald-500 rounded-3xl p-12 text-white text-center"
+>
 
-          <p className="mt-4 text-white/90">
-            Get the latest rooftop solar news, savings tips and energy innovations delivered to your inbox.
-          </p>
+<h3 className="text-2xl sm:text-3xl font-bold">
+Stay Updated With Solar Insights
+</h3>
 
-          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 max-w-xl mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-6 py-3 rounded-full text-gray-800 w-full"
-            />
-            <button className="px-8 py-3 rounded-full bg-white text-sky-600 font-semibold hover:scale-105 transition">
-              Subscribe
-            </button>
-          </div>
-        </motion.div>
+<p className="mt-4 text-white/90">
+Get the latest rooftop solar news, savings tips and energy innovations delivered to your inbox.
+</p>
+
+<div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 max-w-xl mx-auto">
+
+<input
+type="email"
+placeholder="Enter your email"
+value={newsletterEmail}
+onChange={(e)=>setNewsletterEmail(e.target.value)}
+className="px-6 py-3 rounded-full text-gray-800 w-full"
+/>
+
+<button
+onClick={subscribeNewsletter}
+className="px-8 py-3 rounded-full bg-white text-sky-600 font-semibold hover:scale-105 transition"
+>
+Subscribe
+</button>
+
+</div>
+
+</motion.div>
 
       </div>
     </section>
+
+    {newsletterSuccess && (
+
+<div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+
+<div className="bg-white rounded-2xl p-8 shadow-xl text-center max-w-sm">
+
+<h3 className="text-xl font-bold text-[#021423]">
+Subscription Successful
+</h3>
+
+<p className="text-gray-600 mt-2">
+You will now receive solar updates and energy tips.
+</p>
+
+<button
+onClick={()=>setNewsletterSuccess(false)}
+className="mt-5 bg-sky-600 text-white px-6 py-2 rounded-lg"
+>
+Close
+</button>
+
+</div>
+
+</div>
+
+)}
 
     </>
   );
