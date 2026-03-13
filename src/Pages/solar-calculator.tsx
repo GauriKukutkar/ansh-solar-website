@@ -478,9 +478,13 @@ className="mt-6 grid md:grid-cols-3 gap-6"
 ₹ {result.monthly_savings?.toLocaleString()}
 </h3>
 
-<p className="mt-2 text-sm text-gray-500">
+</div>
+
+<div className="bg-green-100 p-6 rounded-xl text-center">
+<p>Yearly Electricity Savings</p>
+<h3 className="text-xl font-bold text-green-700">
 Yearly Savings: ₹ {result.yearly_savings?.toLocaleString()}
-</p>
+</h3>
 </div>
 
 <div className="bg-green-100 p-6 rounded-xl text-center">
