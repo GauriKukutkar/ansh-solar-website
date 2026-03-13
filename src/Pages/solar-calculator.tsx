@@ -2,164 +2,331 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 type SolarResult = {
-  system_size: string;
-  panels: string;
+  system_size: number;
+  panels: number;
   cost: string;
   subsidy: string;
-  payback: string;
+  payback: number;
 };
 
 export default function SolarCalculator() {
 
-  const [bill, setBill] = useState<number>(3000);
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<SolarResult | null>(null);
+  const [name,setName] = useState("");
+  const [phone,setPhone] = useState("");
+  const [city,setCity] = useState("");
+
+  const [month,setMonth] = useState("January");
+  const [bill,setBill] = useState<number>(3000);
+  const [units,setUnits] = useState<number>(200);
+
+  const [solarType,setSolarType] = useState("On-grid");
+  const [consent,setConsent] = useState(false);
+
+  const [loading,setLoading] = useState(false);
+  const [result,setResult] = useState<SolarResult | null>(null);
+
+  const yearlyBill = bill * 12;
 
   const calculateSolar = async () => {
 
+    if(!name || !phone || !city){
+      alert("Please fill your details first");
+      return;
+    }
+
+    if(!consent){
+      alert("Please accept consent");
+      return;
+    }
+
     setLoading(true);
 
-    try {
+    try{
 
       const res = await fetch(
         "https://anshsolarelectricals.com/Backend/solar_calculator.php",
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ bill })
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify({
+            name,
+            phone,
+            city,
+            month,
+            bill,
+            units,
+            solarType
+          })
         }
       );
 
       const data = await res.json();
-
       setResult(data);
 
-    } catch (err) {
-
-      alert("Calculation failed");
-
+    }catch(err){
+      alert("Server connection failed");
     }
 
     setLoading(false);
   };
 
-  return (
+  return(
+
     <div className="min-h-screen bg-gray-50">
 
-      {/* HERO SECTION */}
+      {/* HERO */}
 
-      <motion.section
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-28 px-6"
+      <section
+        className="h-[420px] flex items-center justify-center text-center text-white bg-cover bg-center"
+        style={{
+          backgroundImage:"url('/assets/solar-hero.jpg')"
+        }}
       >
 
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="bg-black/50 w-full h-full flex items-center">
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Solar Savings Calculator
-          </h1>
+          <div className="max-w-4xl mx-auto px-6">
 
-          <p className="text-lg opacity-90 max-w-2xl mx-auto">
-            Estimate solar system size, installation cost and long-term savings
-            based on your electricity bill.
-          </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Solar Electricity Bill Calculator
+            </h1>
 
-          <a
-            href="#calculator"
-            className="inline-block mt-8 bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold"
-          >
-            Calculate Now
-          </a>
+            <p className="text-lg opacity-90">
+              Estimate solar system size, installation cost and yearly savings
+              based on your electricity bill.
+            </p>
+
+          </div>
 
         </div>
 
-      </motion.section>
+      </section>
 
 
       {/* CALCULATOR */}
 
-      <section
-        id="calculator"
-        className="py-24 px-6"
-      >
+      <section className="py-20 px-6">
 
-        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-3xl p-10">
+        <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-10">
 
-          <h2 className="text-3xl text-black font-bold text-center mb-8">
-            Estimate Your Solar System
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+            Solar Savings Calculator
           </h2>
 
-          <div className="space-y-8">
 
-            <div>
+          {/* BASIC DETAILS */}
 
-              <label className="text-sm text-gray-600 font-semibold">
-                Monthly Electricity Bill
-              </label>
+          <div className="mb-12">
+
+            <h3 className="text-xl font-semibold mb-6 text-gray-700">
+              1. Basic Details
+            </h3>
+
+            <div className="grid md:grid-cols-3 gap-5">
 
               <input
-                type="range"
-                min="500"
-                max="20000"
-                step="500"
-                value={bill}
-                onChange={(e) => setBill(Number(e.target.value))}
-                className="w-full mt-4 accent-blue-600"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e)=>setName(e.target.value)}
+                className="border rounded-xl p-3"
               />
 
-              <p className="text-xl font-bold text-blue-600 mt-3">
-                ₹ {bill.toLocaleString()} / month
-              </p>
+              <input
+                placeholder="Mobile Number"
+                value={phone}
+                onChange={(e)=>setPhone(e.target.value)}
+                className="border rounded-xl p-3"
+              />
+
+              <input
+                placeholder="City / Location"
+                value={city}
+                onChange={(e)=>setCity(e.target.value)}
+                className="border rounded-xl p-3"
+              />
 
             </div>
 
+          </div>
+
+
+          {/* BILL DETAILS */}
+
+          <div className="mb-12">
+
+            <h3 className="text-xl font-semibold mb-6 text-gray-700">
+              2. Electricity Bill Details
+            </h3>
+
+            <div className="grid md:grid-cols-3 gap-5">
+
+              <select
+                value={month}
+                onChange={(e)=>setMonth(e.target.value)}
+                className="border rounded-xl p-3"
+              >
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+
+              <input
+                type="number"
+                value={bill}
+                onChange={(e)=>setBill(Number(e.target.value))}
+                placeholder="Monthly Bill ₹"
+                className="border rounded-xl p-3"
+              />
+
+              <input
+                type="number"
+                value={units}
+                onChange={(e)=>setUnits(Number(e.target.value))}
+                placeholder="Units Consumed (kWh)"
+                className="border rounded-xl p-3"
+              />
+
+            </div>
+
+          </div>
+
+
+          {/* BILL CALCULATION */}
+
+          <div className="mb-12">
+
+            <h3 className="text-xl font-semibold mb-6 text-gray-700">
+              3. Bill Calculation
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-6">
+
+              <div className="bg-gray-100 p-6 rounded-xl text-center">
+                <p className="text-gray-500">Monthly Electricity Charges</p>
+                <p className="text-2xl font-bold">₹ {bill}</p>
+              </div>
+
+              <div className="bg-gray-100 p-6 rounded-xl text-center">
+                <p className="text-gray-500">Estimated Yearly Charges</p>
+                <p className="text-2xl font-bold">₹ {yearlyBill}</p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          {/* SOLAR TYPE */}
+
+          <div className="mb-12">
+
+            <h3 className="text-xl font-semibold mb-6 text-gray-700">
+              4. Solar System Preference
+            </h3>
+
+            <select
+              value={solarType}
+              onChange={(e)=>setSolarType(e.target.value)}
+              className="border rounded-xl p-3 w-full"
+            >
+              <option>On-grid</option>
+              <option>Off-grid</option>
+              <option>Hybrid</option>
+            </select>
+
+          </div>
+
+
+          {/* FILE UPLOAD */}
+
+          <div className="mb-12">
+
+            <label className="block mb-3 font-semibold text-gray-700">
+              Upload Electricity Bill (Optional)
+            </label>
+
+            <input type="file" className="border rounded-xl p-3 w-full"/>
+
+          </div>
+
+
+          {/* CONSENT */}
+
+          <div className="flex items-center mb-10">
+
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e)=>setConsent(e.target.checked)}
+              className="mr-3"
+            />
+
+            <span className="text-sm text-gray-600">
+              I agree to be contacted regarding solar installation.
+            </span>
+
+          </div>
+
+
+          {/* BUTTON */}
+
+          <div className="text-center">
 
             <button
               onClick={calculateSolar}
               disabled={loading}
-              className="w-full py-4 rounded-xl bg-blue-600 text-white font-bold text-lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-semibold transition"
             >
-              {loading ? "Calculating..." : "Calculate Solar System"}
+              {loading ? "Calculating..." : "Calculate Solar Savings"}
             </button>
 
           </div>
 
 
-          {/* RESULT SECTION */}
+          {/* RESULT */}
 
           {result && (
 
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mt-12 grid md:grid-cols-2 gap-6 text-black"
+              initial={{opacity:0}}
+              animate={{opacity:1}}
+              className="mt-16 grid md:grid-cols-2 gap-6"
             >
 
-              <div className="bg-gray-100 p-6 rounded-xl">
-                <p className="text-sm text-gray-600">System Size</p>
-                <p className="text-2xl font-bold">{result.system_size} kW</p>
+              <div className="bg-gray-100 p-6 rounded-xl text-center">
+                <p>System Size</p>
+                <h3 className="text-2xl font-bold">{result.system_size} kW</h3>
               </div>
 
-              <div className="bg-gray-100 p-6 rounded-xl">
-                <p className="text-sm text-gray-600">Solar Panels Needed</p>
-                <p className="text-2xl font-bold">{result.panels}</p>
+              <div className="bg-gray-100 p-6 rounded-xl text-center">
+                <p>Solar Panels</p>
+                <h3 className="text-2xl font-bold">{result.panels}</h3>
               </div>
 
-              <div className="bg-gray-100 p-6 rounded-xl">
-                <p className="text-sm text-gray-600">Installation Cost</p>
-                <p className="text-2xl font-bold">₹ {result.cost}</p>
+              <div className="bg-gray-100 p-6 rounded-xl text-center">
+                <p>Installation Cost</p>
+                <h3 className="text-2xl font-bold">₹ {result.cost}</h3>
               </div>
 
-              <div className="bg-gray-100 p-6 rounded-xl">
-                <p className="text-sm text-gray-600">Government Subsidy</p>
-                <p className="text-2xl font-bold">₹ {result.subsidy}</p>
+              <div className="bg-gray-100 p-6 rounded-xl text-center">
+                <p>Government Subsidy</p>
+                <h3 className="text-2xl font-bold">₹ {result.subsidy}</h3>
               </div>
 
-              <div className="bg-gray-100 p-6 rounded-xl md:col-span-2">
-                <p className="text-sm text-gray-600">Estimated Payback Period</p>
-                <p className="text-2xl font-bold">{result.payback} Years</p>
+              <div className="bg-gray-100 p-6 rounded-xl text-center md:col-span-2">
+                <p>Payback Period</p>
+                <h3 className="text-2xl font-bold">{result.payback} Years</h3>
               </div>
 
             </motion.div>
@@ -171,5 +338,7 @@ export default function SolarCalculator() {
       </section>
 
     </div>
+
   );
+
 }
