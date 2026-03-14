@@ -3,7 +3,15 @@
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
-// ===== Database Connection =====
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . '/phpmailer/PHPMailer.php';
+require __DIR__ . '/phpmailer/SMTP.php';
+require __DIR__ . '/phpmailer/Exception.php';
+
+/* ================= DATABASE CONNECTION ================= */
+
 $conn = new mysqli(
     "localhost",
     "Anshsolar_user",
@@ -14,12 +22,13 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     echo json_encode([
         "status" => "error",
-        "message" => "DB connection failed"
+        "message" => "Database connection failed"
     ]);
     exit;
 }
 
-// ===== Collect POST Data =====
+/* ================= GET FORM DATA ================= */
+
 $name = trim($_POST["name"] ?? "");
 $phone = trim($_POST["phone"] ?? "");
 $email = trim($_POST["email"] ?? "");
@@ -29,7 +38,8 @@ $bill = trim($_POST["bill"] ?? "");
 $pincode = trim($_POST["pincode"] ?? "");
 $city = trim($_POST["city"] ?? "");
 
-// ===== Validate Required Fields =====
+/* ================= VALIDATION ================= */
+
 if ($name == "" || $phone == "" || $date == "" || $time == "") {
     echo json_encode([
         "status" => "error",
@@ -38,7 +48,8 @@ if ($name == "" || $phone == "" || $date == "" || $time == "") {
     exit;
 }
 
-// ===== Prepare SQL Statement =====
+/* ================= INSERT INTO DATABASE ================= */
+
 $sql = "INSERT INTO consultation_bookings
 (name, phone, email, visit_date, visit_time, bill_range, pincode, city)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -48,12 +59,11 @@ $stmt = $conn->prepare($sql);
 if (!$stmt) {
     echo json_encode([
         "status" => "error",
-        "message" => "Prepare failed"
+        "message" => "SQL prepare failed"
     ]);
     exit;
 }
 
-// ===== Bind Parameters =====
 $stmt->bind_param(
     "ssssssss",
     $name,
@@ -66,7 +76,6 @@ $stmt->bind_param(
     $city
 );
 
-// ===== Execute Statement =====
 if (!$stmt->execute()) {
     echo json_encode([
         "status" => "error",
@@ -75,13 +84,29 @@ if (!$stmt->execute()) {
     exit;
 }
 
-// ===== Send Email Notification =====
+/* ================= SEND EMAIL USING SMTP ================= */
 
-$to = "anshelectrical5858@gmail.com";   // updated email
+$mail = new PHPMailer(true);
 
-$subject = "New Solar Consultation Booking";
+try {
 
-$message = "
+    $mail->isSMTP();
+    $mail->Host       = 'mail.anshsolarelectricals.com';
+    $mail->SMTPAuth   = true;
+
+    $mail->Username   = 'noreply@anshsolarelectricals.com';
+    $mail->Password   = '[$Email{NO%58|58}';   // your email password
+
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port       = 465;
+
+    $mail->setFrom('noreply@anshsolarelectricals.com', 'Ansh Solar Electricals');
+
+    $mail->addAddress('anshelectrical5858@gmail.com');
+
+    $mail->Subject = "New Solar Consultation Booking";
+
+    $mail->Body = "
 New Consultation Booking
 
 Name: $name
@@ -94,13 +119,16 @@ Pincode: $pincode
 City: $city
 ";
 
-$headers = "From: noreply@anshsolarelectricals.com\r\n";
-$headers .= "Reply-To: $email\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $mail->send();
 
-mail($to, $subject, $message, $headers);
+} catch (Exception $e) {
 
-// ===== Return Success =====
+    error_log("Mailer Error: " . $mail->ErrorInfo);
+
+}
+
+/* ================= SUCCESS RESPONSE ================= */
+
 echo json_encode([
     "status" => "success",
     "message" => "Consultation booked successfully"

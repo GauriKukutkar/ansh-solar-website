@@ -16,6 +16,15 @@ const ScheduleForm = () => {
     setShowModal(true);
   }, []);
 
+  useEffect(() => {
+    if (showPopup) {
+      const timer = setTimeout(() => {
+        setShowPopup(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
@@ -36,9 +45,19 @@ const ScheduleForm = () => {
         }
       );
 
-      const data = await res.json();
+      const text = await res.text();
+
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error("Invalid JSON response");
+      }
 
       if (data.status === "success") {
+
+        setShowModal(false);
 
         setPopupMessage("✅ Consultation booked successfully!");
         setShowPopup(true);
@@ -46,7 +65,6 @@ const ScheduleForm = () => {
         e.currentTarget.reset();
         setSelectedDate("");
         setSelectedTime("");
-        setShowModal(false);
 
       } else {
 
@@ -57,7 +75,8 @@ const ScheduleForm = () => {
 
     } catch (err) {
 
-      console.error(err);
+      console.error("Server error:", err);
+
       setPopupMessage("⚠ Server error. Please try again.");
       setShowPopup(true);
 
@@ -70,19 +89,31 @@ const ScheduleForm = () => {
   return (
     <>
 
-      {/* SUCCESS POPUP */}
+      {/* POPUP MESSAGE */}
       {showPopup && (
-        <div className="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-4 rounded-xl shadow-lg z-50">
+        <div className="fixed bottom-5 right-5 sm:right-8 bg-green-600 text-white px-5 py-3 rounded-xl shadow-lg z-[999] text-sm sm:text-base">
           {popupMessage}
         </div>
       )}
 
       {showModal && (
 
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 z-[999] flex items-center justify-center p-4 overflow-y-auto">
 
-          <div className="glass-card mt-20 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.35)] p-6 sm:p-8 lg:p-10 relative w-full max-w-lg mx-auto">
+          <div className="
+            glass-card
+            w-full
+            max-w-lg
+            bg-white
+            rounded-3xl
+            shadow-[0_20px_60px_rgba(0,0,0,0.35)]
+            p-6 sm:p-8 lg:p-10
+            relative
+            max-h-[90vh]
+            overflow-y-auto
+          ">
 
+            {/* CLOSE BUTTON */}
             <button
               className="absolute top-4 right-4 text-gray-700 text-xl font-bold"
               onClick={() => setShowModal(false)}
@@ -90,7 +121,7 @@ const ScheduleForm = () => {
               ×
             </button>
 
-            <h3 className="text-xl sm:text-2xl font-bold text-[#021423] mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#021423] mb-6 text-center">
               Schedule Your Visit
             </h3>
 
@@ -98,14 +129,14 @@ const ScheduleForm = () => {
 
               <input
                 placeholder="Full Name"
-                className="inputStyle"
+                className="inputStyle w-full"
                 name="name"
                 required
               />
 
               <input
                 placeholder="Phone Number"
-                className="inputStyle"
+                className="inputStyle w-full"
                 type="tel"
                 name="phone"
                 required
@@ -113,19 +144,19 @@ const ScheduleForm = () => {
 
               <input
                 placeholder="Email Address"
-                className="inputStyle"
+                className="inputStyle w-full"
                 type="email"
                 name="email"
               />
 
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                 <div>
                   <label className="formLabel">Select Date</label>
 
                   <input
                     type="date"
-                    className="inputStyle"
+                    className="inputStyle w-full"
                     min={new Date().toISOString().split("T")[0]}
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
@@ -141,7 +172,7 @@ const ScheduleForm = () => {
 
                   <input
                     type="time"
-                    className="inputStyle"
+                    className="inputStyle w-full"
                     value={selectedTime}
                     onChange={(e) => setSelectedTime(e.target.value)}
                     name="time"
@@ -152,7 +183,7 @@ const ScheduleForm = () => {
 
               </div>
 
-              <select className="inputStyle" name="bill">
+              <select className="inputStyle w-full" name="bill">
 
                 <option>Monthly Electricity Bill</option>
                 <option>Below ₹1000</option>
@@ -162,17 +193,17 @@ const ScheduleForm = () => {
 
               </select>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                 <input
                   placeholder="Pincode"
-                  className="inputStyle"
+                  className="inputStyle w-full"
                   name="pincode"
                 />
 
                 <input
                   placeholder="City"
-                  className="inputStyle"
+                  className="inputStyle w-full"
                   name="city"
                 />
 
@@ -182,8 +213,9 @@ const ScheduleForm = () => {
                 type="submit"
                 disabled={!selectedDate || !selectedTime || !isTimeValid() || loading}
                 className="mt-4 w-full bg-gradient-to-r from-blue-600 via-sky-500 to-emerald-400
-                text-white py-4 rounded-xl font-semibold shadow-lg hover:scale-[1.03]
-                active:scale-[0.98] transition disabled:opacity-50"
+                text-white py-3 sm:py-4 rounded-xl font-semibold shadow-lg
+                hover:scale-[1.03] active:scale-[0.98]
+                transition disabled:opacity-50"
               >
 
                 {loading ? "Submitting..." : "Confirm Consultation →"}
