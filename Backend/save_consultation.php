@@ -1,6 +1,7 @@
 <?php
 
 header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
 
 // ===== Database Connection =====
 $conn = new mysqli(
@@ -11,23 +12,29 @@ $conn = new mysqli(
 );
 
 if ($conn->connect_error) {
-    echo json_encode(["status" => "error", "message" => "DB connection failed: " . $conn->connect_error]);
+    echo json_encode([
+        "status" => "error",
+        "message" => "DB connection failed"
+    ]);
     exit;
 }
 
 // ===== Collect POST Data =====
-$name = $_POST["name"] ?? "";
-$phone = $_POST["phone"] ?? "";
-$email = $_POST["email"] ?? "";
-$date = $_POST["date"] ?? "";
-$time = $_POST["time"] ?? "";
-$bill = $_POST["bill"] ?? "";
-$pincode = $_POST["pincode"] ?? "";
-$city = $_POST["city"] ?? "";
+$name = trim($_POST["name"] ?? "");
+$phone = trim($_POST["phone"] ?? "");
+$email = trim($_POST["email"] ?? "");
+$date = trim($_POST["date"] ?? "");
+$time = trim($_POST["time"] ?? "");
+$bill = trim($_POST["bill"] ?? "");
+$pincode = trim($_POST["pincode"] ?? "");
+$city = trim($_POST["city"] ?? "");
 
 // ===== Validate Required Fields =====
 if ($name == "" || $phone == "" || $date == "" || $time == "") {
-    echo json_encode(["status" => "error", "message" => "Required fields missing"]);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Required fields missing"
+    ]);
     exit;
 }
 
@@ -37,13 +44,17 @@ $sql = "INSERT INTO consultation_bookings
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
+
 if (!$stmt) {
-    echo json_encode(["status" => "error", "message" => "Prepare failed: " . $conn->error]);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Prepare failed"
+    ]);
     exit;
 }
 
 // ===== Bind Parameters =====
-$bind = $stmt->bind_param(
+$stmt->bind_param(
     "ssssssss",
     $name,
     $phone,
@@ -54,20 +65,20 @@ $bind = $stmt->bind_param(
     $pincode,
     $city
 );
-if (!$bind) {
-    echo json_encode(["status" => "error", "message" => "Bind failed: " . $stmt->error]);
-    exit;
-}
 
 // ===== Execute Statement =====
-$exec = $stmt->execute();
-if (!$exec) {
-    echo json_encode(["status" => "error", "message" => "Execute failed: " . $stmt->error]);
+if (!$stmt->execute()) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Database insert failed"
+    ]);
     exit;
 }
 
 // ===== Send Email Notification =====
-$to = "anshsolarelectricals@gmail.com";   // change to your email
+
+$to = "anshelectrical5858@gmail.com";   // updated email
+
 $subject = "New Solar Consultation Booking";
 
 $message = "
@@ -83,7 +94,10 @@ Pincode: $pincode
 City: $city
 ";
 
-$headers = "From: noreply@anshsolarelectricals.com";
+$headers = "From: noreply@anshsolarelectricals.com\r\n";
+$headers .= "Reply-To: $email\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
 mail($to, $subject, $message, $headers);
 
 // ===== Return Success =====
@@ -92,7 +106,6 @@ echo json_encode([
     "message" => "Consultation booked successfully"
 ]);
 
-// ===== Close Statement and Connection =====
 $stmt->close();
 $conn->close();
 

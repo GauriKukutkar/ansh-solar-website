@@ -751,7 +751,7 @@ Smart Solar Solutions for Modern India
             ensuring peak solar efficiency year-round.
           </p>
 
-          <p onClick={() => window.location.href = '/Privacy-policy'} className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
+          <p onClick={() => window.location.href = '/contact'} className="text-blue-600 mt-6 font-semibold cursor-pointer group-hover:translate-x-2 transition">
             Learn more →
           </p>
         </div>
