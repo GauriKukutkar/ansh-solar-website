@@ -147,15 +147,21 @@ export default function AboutHero() {
           </div> */}
         </motion.div>
 
-        {/* scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: [10, 0, 10] }}
-          transition={{ delay: 1.2, duration: 2, repeat: Infinity }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm"
-        >
-          Scroll to explore ↓
-        </motion.div>
+       {/* scroll indicator button */}
+<motion.button
+  initial={{ opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: [10, 0, 10] }}
+  transition={{ delay: 1.2, duration: 2, repeat: Infinity }}
+  onClick={() =>
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: "smooth",
+    })
+  }
+  className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm cursor-pointer hover:text-white transition"
+>
+  Scroll to explore ↓
+</motion.button>
       </section>
 {/* ================= SECOND CREATIVE SECTION ================= */}
 <section className="relative bg-[#010b14] text-white overflow-hidden">
@@ -503,7 +509,7 @@ export default function AboutHero() {
 
       </div>
     </section>
-{/* ================= SOLAR COVERAGE MAP ================= */}
+ {/* ================= SOLAR COVERAGE MAP ================= */}
 <section className="relative bg-white overflow-hidden py-28">
 
   <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
@@ -535,59 +541,68 @@ export default function AboutHero() {
     </motion.div>
 
     {/* ================= RIGHT MAP ================= */}
-<motion.div
-  initial={{ opacity: 0, scale: 0.95 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.8 }}
-  className="relative flex justify-center"
->
-  {/* STATIC MAP (no floating animation) */}
-  <div className="relative">
-    <img
-      src={Map}
-      alt="India Map"
-      className="w-[360px] sm:w-[500px] md:w-[620px]"
-    />
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="relative flex justify-center"
+    >
+      <div className="relative">
 
-    {/* ===== CITY MARKERS ONLY ANIMATED ===== */}
-    {[
-      { name: "Mumbai", top: "55%", left: "38%" },
-      { name: "Pune", top: "53%", left: "42%" },
-      { name: "Nashik", top: "48%", left: "42%" },
-      { name: "Nagpur", top: "48%", left: "60%" },
-      { name: "Aurangabad", top: "50%", left: "50%" },
-      { name: "Amravati", top: "45%", left: "58%" },
-      { name: "Kolhapur", top: "62%", left: "40%" },
-      { name: "Solapur", top: "60%", left: "47%" },
-      { name: "Nanded", top: "55%", left: "55%" },
-      { name: "Jalgaon", top: "44%", left: "48%" }
-    ].map((city, i) => (
-      <motion.div
-        key={city.name}
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ delay: i * 0.12, type: "spring" }}
-        viewport={{ once: true }}
-        className="absolute"
-        style={{ top: city.top, left: city.left }}
-      >
-        {/* glowing pulse */}
-        <motion.div
-          animate={{ scale: [1, 1.5, 1], opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-3 h-3 bg-emerald-500 rounded-full shadow-[0_0_16px_5px_rgba(16,185,129,0.6)]"
+        <img
+          src={Map}
+          alt="Maharashtra Map"
+          className="w-[360px] sm:w-[500px] md:w-[620px]"
         />
 
-        {/* city label */}
-        <span className="absolute top-5 left-1/2 -translate-x-1/2 text-xs text-[#021423] font-medium whitespace-nowrap">
-          {city.name}
-        </span>
-      </motion.div>
-    ))}
-  </div>
-</motion.div>
-  
+        {/* ===== CITY MARKERS ===== */}
+        {[
+  { name: "Mumbai", top: "44%", left: "4%" },
+  { name: "Thane", top: "31%", left: "6%" },
+  { name: "Pune", top: "49%", left: "15%" },
+  { name: "Satara", top: "66%", left: "20%" },
+  { name: "Parbhani", top: "40%", left: "46%" },
+  { name: "Nashik", top: "23%", left: "19%" },
+  { name: "Jalgaon", top: "16%", left: "38%" },
+  { name: "Aurangabad", top: "30%", left: "30%" },
+  { name: "Ahmadnagar", top: "45%", left: "25%" },
+  { name: "Solapur", top: "62%", left: "37%" },
+  { name: "Kolhapur", top: "83%", left: "18%" },
+  { name: "Nanded", top: "48%", left: "56%" },
+  { name: "Nagpur", top: "15%", left: "74%" },
+  { name: "Chandrapur", top: "27%", left: "79%" },
+  { name: "Amravati", top: "15%", left: "59%" },
+  { name: "Yavatmal", top: "30%", left: "63%" }
+
+].map((city, i) => (
+          <motion.div
+            key={city.name}
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.12, type: "spring" }}
+            viewport={{ once: true }}
+            className="absolute"
+            style={{ top: city.top, left: city.left }}
+          >
+
+            {/* glowing pulse */}
+            <motion.div
+              animate={{ scale: [1, 1.6, 1], opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-3 h-3 bg-emerald-500 rounded-full shadow-[0_0_18px_6px_rgba(16,185,129,0.6)]"
+            />
+
+            {/* city label */}
+            <span className="absolute top-5 left-1/2 -translate-x-1/2 text-xs text-[#021423] font-medium whitespace-nowrap bg-white/80 px-1 rounded">
+              {city.name}
+            </span>
+
+          </motion.div>
+        ))}
+
+      </div>
+    </motion.div>
 
   </div>
 </section>
