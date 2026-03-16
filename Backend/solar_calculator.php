@@ -129,13 +129,19 @@ switch($property_type){
         $system_size = round($yearly_bill / 15000 , 2);
 }
 
-/* PANELS */
+/* LIMIT SYSTEM SIZE (MAX 150 kW) */
 
-$panels = ceil($system_size * 3);
+if($system_size > 150){
+    $system_size = 150;
+}
 
-/* COST */
+/* PANELS (based on 550W panels) */
 
-$cost = $system_size * 55000;
+$panels = ceil(($system_size * 1000) / 550);
+
+/* COST (₹70,000 per kW) */
+
+$cost = $system_size * 70000;
 
 /* SUBSIDY */
 

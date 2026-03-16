@@ -271,6 +271,117 @@ alert("Server error");
 
 </section> */}
 
+{/* ================= HAPPY CUSTOMERS (SOLAR CAROUSEL) ================= */}
+
+<section className="relative bg-gradient-to-b from-[#020617] to-[#021423] py-32 overflow-hidden">
+
+{/* background glow */}
+
+  <div className="absolute left-1/2 top-1/3 -translate-x-1/2 w-[700px] h-[700px] bg-yellow-400/10 blur-[200px] rounded-full"></div>
+
+  <div className="max-w-6xl mx-auto px-6 relative">
+
+{/* HEADER */}
+<motion.div
+  initial={{ opacity: 0, y: 70 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className="text-center mb-24"
+>
+  <p className="text-yellow-400 tracking-[6px] uppercase text-sm font-semibold">
+    Happy Customers
+  </p>
+
+  <h2 className="mt-4 text-4xl md:text-5xl font-bold text-white">
+    Voices Powered By Solar Energy
+  </h2>
+
+  <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
+    Across Maharashtra, our customers are experiencing the benefits
+    of reliable solar power and reduced electricity bills.
+  </p>
+</motion.div>
+
+{/* TESTIMONIAL SLIDER */}
+<div className="relative overflow-hidden">
+
+  <motion.div
+    className="flex gap-16"
+    animate={{ x: ["0%", "-50%"] }}
+    transition={{
+      duration: 25,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  >
+
+    {[
+      {
+        name: "Rahul Patil",
+        city: "Pune",
+        text: "Electricity bills dropped drastically after installing solar panels."
+      },
+      {
+        name: "Sneha Kulkarni",
+        city: "Nagpur",
+        text: "Professional installation and excellent solar output."
+      },
+      {
+        name: "Amit Deshmukh",
+        city: "Nashik",
+        text: "A great investment for clean energy and long-term savings."
+      },
+      {
+        name: "Priya Sharma",
+        city: "Aurangabad",
+        text: "Reliable system performance throughout the year."
+      },
+      {
+        name: "Vikram Joshi",
+        city: "Mumbai",
+        text: "Our home now runs efficiently on solar energy."
+      },
+      {
+        name: "Sanjay Patwardhan",
+        city: "Kolhapur",
+        text: "Smooth installation and strong technical support."
+      }
+    ].map((item, i) => (
+
+      <div
+        key={i}
+        className="min-w-[320px] max-w-[320px] text-center"
+      >
+
+        {/* big quote */}
+        <div className="text-yellow-400 text-5xl mb-4">“</div>
+
+        <p className="text-gray-300 text-lg leading-relaxed">
+          {item.text}
+        </p>
+
+        <div className="mt-6 text-white font-semibold">
+          {item.name}
+        </div>
+
+        <div className="text-sm text-gray-400">
+          {item.city}
+        </div>
+
+      </div>
+
+    ))}
+
+  </motion.div>
+
+</div>
+
+
+  </div>
+</section>
+
+
     <section className="bg-[#f8fbff] py-24 px-6">
       <div className="max-w-7xl mx-auto">
 

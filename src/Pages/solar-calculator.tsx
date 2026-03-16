@@ -506,5 +506,7 @@ Yearly Savings: ₹ {result.yearly_savings?.toLocaleString()}
 
 </div>
 
+
+
   );
 }

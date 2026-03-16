@@ -167,8 +167,8 @@ export default function Footer() {
   </h4>
 
   <p className="text-sm text-gray-400 leading-relaxed">
-    Nagpur • Mumbai • Pune • Nashik • Aurangabad • Kolhapur • Solapur •
-    Amravati • Nanded • Jalgaon • Latur • Chandrapur
+    Nagpur • Mumbai • Thane • Satara • Parbhani • Ahmadnagar • Pune • Nashik • Aurangabad • Kolhapur • Solapur •
+    Amravati • Nanded • Jalgaon • Yavatmal • Chandrapur
   </p>
 </div>
 
