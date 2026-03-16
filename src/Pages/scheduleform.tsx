@@ -98,7 +98,7 @@ const ScheduleForm = () => {
 
       {showModal && (
 
-        <div className="fixed inset-0 bg-black/50 z-[999] flex items-center justify-center p-4 overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 z-[999] flex items-start justify-center pt-24 sm:pt-28 pb-10 px-4 overflow-y-auto">
 
           <div className="
             glass-card
@@ -109,8 +109,6 @@ const ScheduleForm = () => {
             shadow-[0_20px_60px_rgba(0,0,0,0.35)]
             p-6 sm:p-8 lg:p-10
             relative
-            max-h-[90vh]
-            overflow-y-auto
           ">
 
             {/* CLOSE BUTTON */}
