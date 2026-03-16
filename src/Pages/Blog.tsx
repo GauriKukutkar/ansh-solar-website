@@ -4,6 +4,7 @@ import blog2 from "../assets/blog2.jpg";
 import blog3 from "../assets/blog3.jpg";
 import blog4 from "../assets/blog4.jpg";
 import blog5 from "../assets/blog5.jpg";
+import { useEffect } from "react";
 import societyImg from "../assets/society.jpg";
 import homeImg from "../assets/home.jpg";
 import villaImg from "../assets/villas.jpg";
@@ -13,7 +14,11 @@ import featured from "../assets/blog-featured.png";
 import { Sun, Zap, BarChart3, Battery } from "lucide-react";
 // import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-
+import customer1 from "../assets/customer1.jpeg";
+import customer2 from "../assets/customer2.jpeg";
+import customer3 from "../assets/customer3.jpeg";
+import customer4 from "../assets/customer4.jpeg";
+import customer5 from "../assets/NILESH RATHOD GEOTAG.pdf";
 
 export default function Blog() {
     const offerings = [
@@ -48,6 +53,35 @@ export default function Blog() {
     height: "h-[340px]",
   },
 ];
+
+const images = [
+customer1,
+customer2,
+customer3,
+customer4,
+customer5
+];
+
+const [index,setIndex] = useState(0);
+
+useEffect(()=>{
+const interval = setInterval(()=>{
+setIndex((prev)=> (prev + 1) % images.length);
+},3000);
+
+return ()=> clearInterval(interval);
+},[]);
+
+// const sliderRef = useRef(null);
+
+// const scrollLeft = () => {
+// sliderRef.current.scrollBy({ left: -320, behavior: "smooth" });
+// };
+
+// const scrollRight = () => {
+// sliderRef.current.scrollBy({ left: 320, behavior: "smooth" });
+// };
+
 
 const [newsletterEmail,setNewsletterEmail] = useState("");
 const [newsletterSuccess,setNewsletterSuccess] = useState(false);
@@ -506,6 +540,77 @@ className="w-28 h-28 object-cover rounded-xl"
         </div>
       </div>
     </section>
+<section className="py-24 bg-gradient-to-b from-white to-yellow-50">
+
+<div className="max-w-7xl mx-auto px-6">
+
+{/* Heading */}
+
+<motion.div
+initial={{opacity:0,y:40}}
+whileInView={{opacity:1,y:0}}
+transition={{duration:0.6}}
+viewport={{once:true}}
+className="text-center mb-16"
+>
+
+<h2 className="text-4xl font-bold text-gray-800 mb-4">
+Happy Solar Customers
+</h2>
+
+<p className="text-gray-600 max-w-2xl mx-auto">
+Hundreds of homes and businesses are already saving electricity with rooftop solar installations.
+</p>
+
+</motion.div>
+
+{/* Horizontal Slider */}
+
+<div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+
+{images.map((img,i)=>(
+
+<motion.div
+key={i}
+whileHover={{scale:1.05}}
+className="min-w-[300px] bg-white rounded-2xl shadow-xl overflow-hidden"
+>
+
+<div className="relative">
+
+<img
+src={img}
+alt="Solar Customer"
+className="w-full h-[280px] object-cover"
+/>
+
+<div className="absolute top-4 left-4 bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-full">
+Solar Installed
+</div>
+
+</div>
+
+<div className="p-5">
+
+<p className="font-semibold text-gray-800 text-lg">
+Successful Installation
+</p>
+
+<p className="text-sm text-gray-500 mt-1">
+Customer switched to solar and started saving on electricity bills.
+</p>
+
+</div>
+
+</motion.div>
+
+))}
+
+</div>
+
+</div>
+
+</section>
 
 <section className="bg-white py-24 px-6">
       <div className="max-w-7xl mx-auto">
