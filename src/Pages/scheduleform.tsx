@@ -44,16 +44,20 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       }
     );
 
-    /* check HTTP status */
-    if (!res.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    /* get JSON response directly */
-    const data = await res.json();
+    /* read raw response text first */
+    const text = await res.text();
 
     /* log backend response for debugging */
-    console.log("Server Response:", data);
+    console.log("Raw Server Response:", text);
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch (err) {
+      console.error("JSON parse error:", err);
+      throw new Error("Invalid JSON response");
+    }
 
     if (data.status === "success") {
 
