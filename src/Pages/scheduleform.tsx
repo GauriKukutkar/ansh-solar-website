@@ -24,74 +24,67 @@ const ScheduleForm = () => {
       return () => clearTimeout(timer);
     }
   }, [showPopup]);
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  if (loading) return;
 
-    if (loading) return;
+  setLoading(true);
 
-    setLoading(true);
+  const formData = new FormData(e.currentTarget);
 
-    const formData = new FormData(e.currentTarget);
+  try {
 
-    try {
-
-      const res = await fetch(
-  "https://anshsolarelectricals.com/Backend/save_consultation.php",
-  {
-    method: "POST",
-    body: formData
-  }
-);
-      /* NEW: check HTTP status */
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
+    const res = await fetch(
+      "https://anshsolarelectricals.com/Backend/save_consultation.php",
+      {
+        method: "POST",
+        body: formData
       }
+    );
 
-      const text = await res.text();
+    /* check HTTP status */
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
 
-      /* NEW: log backend response for debugging */
-      console.log("Server Response:", text);
+    /* get JSON response directly */
+    const data = await res.json();
 
-      let data;
+    /* log backend response for debugging */
+    console.log("Server Response:", data);
 
-      try {
-        data = JSON.parse(text);
-      } catch {
-        throw new Error("Invalid JSON response");
-      }
+    if (data.status === "success") {
 
-      if (data.status === "success") {
+      setShowModal(false);
 
-        setShowModal(false);
+      setPopupMessage("✅ Consultation booked successfully!");
+      setShowPopup(true);
 
-        setPopupMessage("✅ Consultation booked successfully!");
-        setShowPopup(true);
+      e.currentTarget.reset();
+      setSelectedDate("");
+      setSelectedTime("");
 
-        e.currentTarget.reset();
-        setSelectedDate("");
-        setSelectedTime("");
+    } else {
 
-      } else {
-
-        setPopupMessage(data.message || "❌ Error submitting form.");
-        setShowPopup(true);
-
-      }
-
-    } catch (err) {
-
-      console.error("Server error:", err);
-
-      setPopupMessage("⚠ Server error. Please try again.");
+      setPopupMessage(data.message || "❌ Error submitting form.");
       setShowPopup(true);
 
     }
 
-    setLoading(false);
+  } catch (err) {
 
-  };
+    console.error("Server error:", err);
+
+    setPopupMessage("⚠ Server error. Please try again.");
+    setShowPopup(true);
+
+  }
+
+  setLoading(false);
+
+};
 
   return (
     <>
