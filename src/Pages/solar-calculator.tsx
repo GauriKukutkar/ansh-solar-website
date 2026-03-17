@@ -565,10 +565,10 @@ className="mt-6 grid md:grid-cols-3 gap-6"
 <h3 className="text-xl font-bold">{result.system_size} kW</h3>
 </div>
 
-<div className="bg-yellow-50 p-6 rounded-xl text-center">
+{/* <div className="bg-yellow-50 p-6 rounded-xl text-center">
 <p>Solar Panels</p>
 <h3 className="text-xl font-bold">{result.panels}</h3>
-</div>
+</div> */}
 
 {/* <div className="bg-green-50 p-6 rounded-xl text-center">
 <p>Installation Cost</p>
@@ -600,12 +600,12 @@ Yearly Savings: ₹ {result.yearly_savings?.toLocaleString()}
 </h3>
 </div>
 
-<div className="bg-green-100 p-6 rounded-xl text-center">
+{/* <div className="bg-green-100 p-6 rounded-xl text-center">
 <p>25 Year Solar Profit</p>
 <h3 className="text-xl font-bold text-green-700">
 ₹ {result.solar_profit_25yrs}
 </h3>
-</div>
+</div> */}
 
 </motion.div>
 

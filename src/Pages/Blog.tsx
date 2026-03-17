@@ -78,19 +78,19 @@ title: "Independent House Solar",
 desc: "Efficient solar solutions for independent houses."
 },
 {
-img: customer5,
-title: "Solar Project",
-desc: "Common electricity cost drastically reduced."
+  img: customer5,
+  title: "Rooftop Solar Installation",
+  desc: "Lowered monthly electricity bills with an efficient home solar setup."
 },
 {
-img: customer6,
-title: "Solar Project",
-desc: "Common electricity cost drastically reduced."
+  img: customer6,
+  title: "Home Solar Upgrade",
+  desc: "Upgraded to solar energy for consistent savings and reliable power."
 },
 {
-img: customer7,
-title: "Solar Project",
-desc: "Common electricity cost drastically reduced."
+  img: customer7,
+  title: "Smart Solar Living",
+  desc: "Adopted clean energy for a sustainable and cost-effective lifestyle."
 }
 ];
 
