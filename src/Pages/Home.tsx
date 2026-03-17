@@ -60,7 +60,7 @@ const handleConsultation = async () => {
     formData.append("city",city);
 
     const res = await fetch(
-      "https://anshsolarelectricals.com/Backend/consultation_booking.php",
+      "https://anshsolarelectricals.com/Backend/save_consultation.php",
       {
         method:"POST",
         body:formData
