@@ -15,9 +15,8 @@ const [city,setCity] = useState("");
 const [area,setArea] = useState("");
 
 const [propertyType,setPropertyType] = useState("Residential");
-
-const [roofType,setRoofType] = useState("");
-const [roofArea,setRoofArea] = useState<number>(0);
+const [roofType] = useState("");
+const [roofArea, setRoofArea] = useState("");
 const [roofDirection,setRoofDirection] = useState("");
 const [shadowLevel,setShadowLevel] = useState("");
 
@@ -187,7 +186,7 @@ Roof Details
 <label className="block font-medium mb-1">Roof Type</label>
 <select
 value={roofType}
-onChange={(e)=>setRoofType(e.target.value)}
+onChange={(e)=>setRoofArea(e.target.value)}
 className="border p-3 rounded-xl w-full"
 >
 <option value="">Select Roof Type</option>
@@ -200,14 +199,14 @@ className="border p-3 rounded-xl w-full"
 </div>
 
 <div>
-<label className="block font-medium mb-1">Roof Area (sq.ft)</label>
-<input
-type="number"
-value={roofArea}
-onChange={(e)=>setRoofArea(Number(e.target.value))}
-placeholder="Enter available roof area"
-className="border p-3 rounded-xl w-full"
-/>
+  <label className="block font-medium mb-1">Roof Area (sq.ft)</label>
+  <input
+    type="number"
+    value={roofArea}
+    onChange={(e)=>setRoofArea(e.target.value)}
+    placeholder="Enter available roof area"
+    className="border p-3 rounded-xl w-full"
+  />
 </div>
 
 <div>

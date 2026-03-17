@@ -32,7 +32,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
   setLoading(true);
 
-  const formData = new FormData(e.currentTarget);
+  const form = e.currentTarget;   // ✅ store form reference safely
+  const formData = new FormData(form);
 
   try {
 
@@ -44,20 +45,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       }
     );
 
-    /* read raw response text first */
     const text = await res.text();
 
-    /* log backend response for debugging */
     console.log("Raw Server Response:", text);
 
-    let data;
-
-    try {
-      data = JSON.parse(text);
-    } catch (err) {
-      console.error("JSON parse error:", err);
-      throw new Error("Invalid JSON response");
-    }
+    const data = JSON.parse(text);
 
     if (data.status === "success") {
 
@@ -66,7 +58,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       setPopupMessage("✅ Consultation booked successfully!");
       setShowPopup(true);
 
-      e.currentTarget.reset();
+      form.reset();   // ✅ use stored reference instead of e.currentTarget
+
       setSelectedDate("");
       setSelectedTime("");
 
