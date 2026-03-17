@@ -4,7 +4,7 @@ import blog2 from "../assets/blog2.jpg";
 import blog3 from "../assets/blog3.jpg";
 import blog4 from "../assets/blog4.jpg";
 import blog5 from "../assets/blog5.jpg";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import societyImg from "../assets/society.jpg";
 import homeImg from "../assets/home.jpg";
 import villaImg from "../assets/villas.jpg";
@@ -18,7 +18,9 @@ import customer1 from "../assets/customer1.jpeg";
 import customer2 from "../assets/customer2.jpeg";
 import customer3 from "../assets/customer3.jpeg";
 import customer4 from "../assets/customer4.jpeg";
-import customer5 from "../assets/NILESH RATHOD GEOTAG.pdf";
+import customer5 from "../assets/customer5.jpg";
+import customer6 from "../assets/customer6.jpg";
+import customer7 from "../assets/customer7.jpg";
 
 export default function Blog() {
     const offerings = [
@@ -54,23 +56,53 @@ export default function Blog() {
   },
 ];
 
-const images = [
-customer1,
-customer2,
-customer3,
-customer4,
-customer5
+const customers = [
+{
+img: customer1,
+title: "5kW Solar Installed",
+desc: "Nagpur home saving ₹5000/month on electricity."
+},
+{
+img: customer2,
+title: "3kW Residential System",
+desc: "Reduced electricity bill by 80%."
+},
+{
+img: customer3,
+title: "Residential System ",
+desc: "homes saving thousands every year."
+},
+{
+img: customer4,
+title: "Independent House Solar",
+desc: "Efficient solar solutions for independent houses."
+},
+{
+img: customer5,
+title: "Solar Project",
+desc: "Common electricity cost drastically reduced."
+},
+{
+img: customer6,
+title: "Solar Project",
+desc: "Common electricity cost drastically reduced."
+},
+{
+img: customer7,
+title: "Solar Project",
+desc: "Common electricity cost drastically reduced."
+}
 ];
 
-const [index,setIndex] = useState(0);
+// const [index,setIndex] = useState(0);
 
-useEffect(()=>{
-const interval = setInterval(()=>{
-setIndex((prev)=> (prev + 1) % images.length);
-},3000);
+// useEffect(()=>{
+// const interval = setInterval(()=>{
+// setIndex((prev)=> (prev + 1) % customers.length);
+// },3000);
 
-return ()=> clearInterval(interval);
-},[]);
+// return ()=> clearInterval(interval);
+// },[]);
 
 // const sliderRef = useRef(null);
 
@@ -324,7 +356,7 @@ alert("Server error");
   className="text-center mb-24"
 >
   <p className="text-yellow-400 tracking-[6px] uppercase text-sm font-semibold">
-    Happy Customers
+  Customers Reviews Across Maharashtra
   </p>
 
   <h2 className="mt-4 text-4xl md:text-5xl font-bold text-white">
@@ -540,6 +572,8 @@ className="w-28 h-28 object-cover rounded-xl"
         </div>
       </div>
     </section>
+
+    {/* Happy solar customers */}
 <section className="py-24 bg-gradient-to-b from-white to-yellow-50">
 
 <div className="max-w-7xl mx-auto px-6">
@@ -568,7 +602,7 @@ Hundreds of homes and businesses are already saving electricity with rooftop sol
 
 <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
 
-{images.map((img,i)=>(
+{customers.map((item,i)=>(
 
 <motion.div
 key={i}
@@ -579,13 +613,13 @@ className="min-w-[300px] bg-white rounded-2xl shadow-xl overflow-hidden"
 <div className="relative">
 
 <img
-src={img}
+src={item.img}
 alt="Solar Customer"
 className="w-full h-[280px] object-cover"
 />
 
 <div className="absolute top-4 left-4 bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-full">
-Solar Installed
+{item.title}
 </div>
 
 </div>
@@ -593,11 +627,11 @@ Solar Installed
 <div className="p-5">
 
 <p className="font-semibold text-gray-800 text-lg">
-Successful Installation
+{item.title}
 </p>
 
 <p className="text-sm text-gray-500 mt-1">
-Customer switched to solar and started saving on electricity bills.
+{item.desc}
 </p>
 
 </div>
