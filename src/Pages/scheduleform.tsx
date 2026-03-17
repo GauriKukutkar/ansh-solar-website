@@ -38,13 +38,12 @@ const ScheduleForm = () => {
     try {
 
       const res = await fetch(
-        "https://anshsolarelectricals.com/Backend/save_consultation.php",
-        {
-          method: "POST",
-          body: formData
-        }
-      );
-
+  "https://anshsolarelectricals.com/Backend/save_consultation.php",
+  {
+    method: "POST",
+    body: formData
+  }
+);
       /* NEW: check HTTP status */
       if (!res.ok) {
         throw new Error("Network response was not ok");
