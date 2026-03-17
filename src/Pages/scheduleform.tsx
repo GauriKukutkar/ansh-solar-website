@@ -45,7 +45,15 @@ const ScheduleForm = () => {
         }
       );
 
+      /* NEW: check HTTP status */
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+
       const text = await res.text();
+
+      /* NEW: log backend response for debugging */
+      console.log("Server Response:", text);
 
       let data;
 

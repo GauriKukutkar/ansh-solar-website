@@ -151,11 +151,62 @@ onChange={(e)=>setArea(e.target.value)}
 className="border border-gray-300 rounded-xl p-3 w-full"
 >
 <option value="">Select Your Area</option>
+
+{/* Maharashtra */}
 <option>Nagpur Urban</option>
 <option>Nagpur Rural</option>
+<option>Mumbai</option>
+<option>Pune</option>
+<option>Thane</option>
+<option>Nashik</option>
+<option>Aurangabad</option>
 <option>Wardha</option>
 <option>Amravati</option>
+<option>Chandrapur</option>
+<option>Yavatmal</option>
+
+{/* Metro Cities */}
+<option>Delhi</option>
+<option>Bangalore</option>
+<option>Hyderabad</option>
+<option>Chennai</option>
+<option>Kolkata</option>
+
+{/* Tier 2 Cities */}
+<option>Ahmedabad</option>
+<option>Surat</option>
+<option>Jaipur</option>
+<option>Lucknow</option>
+<option>Kanpur</option>
+<option>Indore</option>
+<option>Bhopal</option>
+<option>Patna</option>
+<option>Ranchi</option>
+<option>Raipur</option>
+
+{/* Other States */}
+<option>Goa</option>
+<option>Gujarat</option>
+<option>Rajasthan</option>
+<option>Madhya Pradesh</option>
+<option>Uttar Pradesh</option>
+<option>Bihar</option>
+<option>Jharkhand</option>
+<option>Chhattisgarh</option>
+<option>Punjab</option>
+<option>Haryana</option>
+<option>Himachal Pradesh</option>
+<option>Uttarakhand</option>
+<option>West Bengal</option>
+<option>Odisha</option>
+<option>Kerala</option>
+<option>Tamil Nadu</option>
+<option>Karnataka</option>
+<option>Andhra Pradesh</option>
+<option>Telangana</option>
+
 <option>Other</option>
+
 </select>
 
 </div>
@@ -229,41 +280,60 @@ className="border rounded-xl p-3 w-full"
 )}
 
 {/* COMMERCIAL */}
-
 {propertyType === "Commercial" && (
 
 <div className="grid md:grid-cols-2 gap-4 mb-6">
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Business / Factory Name
+</label>
 <input
 value={businessName}
 onChange={(e)=>setBusinessName(e.target.value)}
 placeholder="Enter Business / Factory Name"
-className="border rounded-xl p-3"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Monthly Electricity Bill (₹)
+</label>
 <input
 type="number"
 value={bill}
 onChange={(e)=>setBill(Number(e.target.value))}
-placeholder="Monthly Electricity Bill ₹"
-className="border rounded-xl p-3"
+placeholder="Enter Monthly Bill"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Monthly Units Consumed
+</label>
 <input
 type="number"
 value={units}
 onChange={(e)=>setUnits(Number(e.target.value))}
-placeholder="Monthly Units Consumed"
-className="border rounded-xl p-3"
+placeholder="Enter Units"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Connected Load (kW)
+</label>
 <input
 type="number"
 value={connectedLoad}
 onChange={(e)=>setConnectedLoad(e.target.value)}
-placeholder="Connected Load (kW)"
-className="border rounded-xl p-3"
+placeholder="Enter Load"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
 </div>
 
@@ -275,77 +345,116 @@ className="border rounded-xl p-3"
 
 <div className="grid md:grid-cols-2 gap-4 mb-6">
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Society Name
+</label>
 <input
 value={societyName}
 onChange={(e)=>setSocietyName(e.target.value)}
 placeholder="Enter Society Name"
-className="border rounded-xl p-3"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Number of Flats
+</label>
 <input
 type="number"
 value={flats}
 onChange={(e)=>setFlats(e.target.value)}
-placeholder="Number of Flats"
-className="border rounded-xl p-3"
+placeholder="Enter Flats Count"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Common Electricity Bill (₹)
+</label>
 <input
 type="number"
 value={bill}
 onChange={(e)=>setBill(Number(e.target.value))}
-placeholder="Common Electricity Bill ₹"
-className="border rounded-xl p-3"
+placeholder="Enter Bill"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Monthly Units Consumed
+</label>
 <input
 type="number"
 value={units}
 onChange={(e)=>setUnits(Number(e.target.value))}
-placeholder="Monthly Units Consumed"
-className="border rounded-xl p-3"
+placeholder="Enter Units"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
 </div>
 
 )}
 
-{/* AGRICULTURE */}
-
+{/* Agriculture */}
 {propertyType === "Agriculture" && (
 
 <div className="grid md:grid-cols-2 gap-4 mb-6">
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Pump Capacity (HP)
+</label>
 <input
 type="number"
 value={pumpHP}
 onChange={(e)=>setPumpHP(e.target.value)}
-placeholder="Pump Capacity (HP)"
-className="border rounded-xl p-3"
+placeholder="Enter Pump Capacity"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Daily Running Hours
+</label>
 <input
 type="number"
 value={runningHours}
 onChange={(e)=>setRunningHours(e.target.value)}
-placeholder="Daily Running Hours"
-className="border rounded-xl p-3"
+placeholder="Enter Hours"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Monthly Electricity Bill (₹)
+</label>
 <input
 type="number"
 value={bill}
 onChange={(e)=>setBill(Number(e.target.value))}
-placeholder="Monthly Electricity Bill ₹"
-className="border rounded-xl p-3"
+placeholder="Enter Bill"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
+<div>
+<label className="block text-sm font-semibold text-gray-700 mb-1">
+Farm / Land Area
+</label>
 <input
 value={farmArea}
 onChange={(e)=>setFarmArea(e.target.value)}
-placeholder="Farm / Land Area"
-className="border rounded-xl p-3"
+placeholder="Enter Area"
+className="border rounded-xl p-3 w-full"
 />
+</div>
 
 </div>
 
@@ -461,20 +570,20 @@ className="mt-6 grid md:grid-cols-3 gap-6"
 <h3 className="text-xl font-bold">{result.panels}</h3>
 </div>
 
-<div className="bg-green-50 p-6 rounded-xl text-center">
+{/* <div className="bg-green-50 p-6 rounded-xl text-center">
 <p>Installation Cost</p>
 <h3 className="text-xl font-bold">₹ {result.cost}</h3>
-</div>
+</div> */}
 
-<div className="bg-purple-50 p-6 rounded-xl text-center">
+{/* <div className="bg-purple-50 p-6 rounded-xl text-center">
 <p>Government Subsidy</p>
 <h3 className="text-xl font-bold">₹ {result.subsidy}</h3>
-</div>
+</div> */}
 
-<div className="bg-indigo-50 p-6 rounded-xl text-center">
+{/* <div className="bg-indigo-50 p-6 rounded-xl text-center">
 <p>Payback Period</p>
 <h3 className="text-xl font-bold">{result.payback} Years</h3>
-</div>
+</div> */}
 
 <div className="bg-emerald-50 p-6 rounded-xl text-center">
 <p>Monthly Electricity Savings</p>
