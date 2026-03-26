@@ -88,6 +88,7 @@ const handleConsultation = async () => {
 
   setLoading(false);
 };
+
 const categories = ["General", "Installation", "Maintenance & Security"];
 
 const faqData = {

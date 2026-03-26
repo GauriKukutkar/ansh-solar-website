@@ -154,108 +154,150 @@ alert("Server error");
 };
   return (
     <>
-     <section className="bg-white pt-32 pb-24 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
 
-        {/* ================= HEADER ================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl mx-auto"
-        >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#021423] leading-tight">
-            Insights on
-            <span className="text-sky-500"> Rooftop Solar</span>
-          </h1>
+// Enhanced Sections with Better UI/UX, Animations, and Visual Hierarchy
 
-          <p className="mt-6 text-gray-600 text-lg leading-relaxed">
-            Expert insights, solar trends, installation guides and energy
-            innovations helping you make smarter sustainable decisions.
-          </p>
-        </motion.div>
+{/* ================= HAPPY SOLAR CUSTOMERS ================= */}
+<section className="py-28 bg-gradient-to-br from-white via-yellow-50 to-yellow-100 relative overflow-hidden">
 
-        {/* GRID COLLAGE */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 auto-rows-[200px]">
+<div className="max-w-7xl mx-auto px-6">
 
-          {/* BLOG 1 - LARGE */}
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="lg:col-span-4 row-span-2 rounded-2xl overflow-hidden"
-          >
-            <img
-              src={blog1}
-              alt="Blog 1"
-              className="w-full h-full object-cover hover:scale-105 transition duration-500"
-            />
-          </motion.div>
+{/* Heading */}
+<motion.div
+initial={{opacity:0,y:40}}
+whileInView={{opacity:1,y:0}}
+transition={{duration:0.6}}
+viewport={{once:true}}
+className="text-center mb-20"
+>
+<h2 className="text-5xl font-bold text-gray-900 mb-4">
+Trusted by <span className="text-yellow-500">Happy Solar Customers</span>
+</h2>
 
-          {/* BLOG 2 - VERTICAL STYLE */}
-          <motion.div
-            initial={{ opacity: 0, y: -60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 row-span-2 rounded-2xl overflow-hidden"
-          >
-            <img
-              src={blog2}
-              alt="Blog 2"
-              className="w-full h-full object-cover hover:scale-105 transition duration-500"
-            />
-          </motion.div>
+<p className="text-gray-600 max-w-2xl mx-auto text-lg">
+Real homes. Real savings. Real impact. See how rooftop solar is transforming lives.
+</p>
+</motion.div>
 
-          {/* BLOG 3 */}
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 row-span-2 rounded-2xl overflow-hidden"
-          >
-            <img
-              src={blog3}
-              alt="Blog 3"
-              className="w-full h-full object-cover hover:scale-105 transition duration-500"
-            />
-          </motion.div>
+{/* Slider */}
+<div className="flex gap-8 overflow-x-auto pb-6 scrollbar-hide">
 
-          {/* BLOG 4 - VERTICAL STYLE */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 row-span-2 rounded-2xl overflow-hidden"
-          >
-            <img
-              src={blog4}
-              alt="Blog 4"
-              className="w-full h-full object-cover hover:scale-105 transition duration-500"
-            />
-          </motion.div>
+{customers.map((item,i)=>(
 
-          {/* BLOG 5 */}
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 row-span-2 rounded-2xl overflow-hidden"
-          >
-            <img
-              src={blog5}
-              alt="Blog 5"
-              className="w-full h-full object-cover hover:scale-105 transition duration-500"
-            />
-          </motion.div>
+<motion.div
+key={i}
+whileHover={{scale:1.06}}
+transition={{type:"spring", stiffness:200}}
+className="min-w-[320px] bg-white rounded-3xl shadow-2xl overflow-hidden border border-yellow-100 hover:shadow-yellow-200"
+>
 
-        </div>
-      </div>
-    </section>
+<div className="relative group">
+<img
+src={item.img}
+alt="Solar Customer"
+className="w-full h-[300px] object-cover group-hover:scale-110 transition duration-700"
+/>
+
+<div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition" />
+
+<div className="absolute top-4 left-4 bg-yellow-400 text-black text-xs font-bold px-4 py-1 rounded-full shadow">
+{item.title}
+</div>
+</div>
+
+<div className="p-6">
+<p className="font-bold text-gray-900 text-xl">
+{item.title}
+</p>
+
+<p className="text-sm text-gray-500 mt-2 leading-relaxed">
+{item.desc}
+</p>
+
+{/* Added Metric */}
+<div className="mt-4 text-yellow-500 font-semibold text-sm">
+⚡ Saved up to 70% electricity
+</div>
+</div>
+
+</motion.div>
+
+))}
+
+</div>
+
+</div>
+</section>
+
+
+{/* ================= INSIGHTS SECTION ================= */}
+<section className="bg-gradient-to-b from-white to-gray-50 pt-32 pb-28 px-6 overflow-hidden">
+<div className="max-w-7xl mx-auto">
+
+{/* Header */}
+<motion.div
+initial={{ opacity: 0, y: 60 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8 }}
+className="text-center max-w-4xl mx-auto"
+>
+<h1 className="text-5xl sm:text-6xl font-bold text-[#021423] leading-tight">
+Solar <span className="text-sky-500">Insights & Trends</span>
+</h1>
+
+<p className="mt-6 text-gray-600 text-lg leading-relaxed">
+Stay ahead with expert guides, cost breakdowns, and future-ready solar innovations.
+</p>
+</motion.div>
+
+{/* GRID */}
+<div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 auto-rows-[220px]">
+
+{/* Card Component */}
+{[
+  {img: blog1, span: "lg:col-span-4 row-span-2", title:"Solar Savings Guide"},
+  {img: blog2, span: "lg:col-span-2 row-span-2", title:"Installation Tips"},
+  {img: blog3, span: "lg:col-span-2 row-span-2", title:"Cost Breakdown"},
+  {img: blog4, span: "lg:col-span-2 row-span-2", title:"Future of Solar"},
+  {img: blog5, span: "lg:col-span-2 row-span-2", title:"Why Go Solar?"}
+].map((card, i)=>(
+
+<motion.div
+key={i}
+initial={{ opacity: 0, scale: 0.9 }}
+whileInView={{ opacity: 1, scale: 1 }}
+transition={{ duration: 0.6, delay: i * 0.1 }}
+viewport={{ once: true }}
+className={`${card.span} rounded-3xl overflow-hidden relative group cursor-pointer`}
+>
+
+<img
+src={card.img}
+alt="Blog"
+className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+/>
+
+{/* Overlay */}
+<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-5">
+
+<div>
+<p className="text-white text-lg font-semibold">
+{card.title}
+</p>
+{/* <p className="text-sm text-gray-200">Contact Now</p> */}
+</div>
+
+</div>
+
+</motion.div>
+
+))}
+
+</div>
+
+</div>
+</section>
+
 
 {/* <section className="bg-white pt-32 pb-24 px-6 overflow-hidden">
 
@@ -573,78 +615,6 @@ className="w-28 h-28 object-cover rounded-xl"
       </div>
     </section>
 
-    {/* Happy solar customers */}
-<section className="py-24 bg-gradient-to-b from-white to-yellow-50">
-
-<div className="max-w-7xl mx-auto px-6">
-
-{/* Heading */}
-
-<motion.div
-initial={{opacity:0,y:40}}
-whileInView={{opacity:1,y:0}}
-transition={{duration:0.6}}
-viewport={{once:true}}
-className="text-center mb-16"
->
-
-<h2 className="text-4xl font-bold text-gray-800 mb-4">
-Happy Solar Customers
-</h2>
-
-<p className="text-gray-600 max-w-2xl mx-auto">
-Hundreds of homes and businesses are already saving electricity with rooftop solar installations.
-</p>
-
-</motion.div>
-
-{/* Horizontal Slider */}
-
-<div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-
-{customers.map((item,i)=>(
-
-<motion.div
-key={i}
-whileHover={{scale:1.05}}
-className="min-w-[300px] bg-white rounded-2xl shadow-xl overflow-hidden"
->
-
-<div className="relative">
-
-<img
-src={item.img}
-alt="Solar Customer"
-className="w-full h-[280px] object-cover"
-/>
-
-<div className="absolute top-4 left-4 bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-full">
-{item.title}
-</div>
-
-</div>
-
-<div className="p-5">
-
-<p className="font-semibold text-gray-800 text-lg">
-{item.title}
-</p>
-
-<p className="text-sm text-gray-500 mt-1">
-{item.desc}
-</p>
-
-</div>
-
-</motion.div>
-
-))}
-
-</div>
-
-</div>
-
-</section>
 
 <section className="bg-white py-24 px-6">
       <div className="max-w-7xl mx-auto">

@@ -238,7 +238,7 @@ className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus
 
 <input
 type="text"
-placeholder="Installation Pincode"
+placeholder="Pincode"
 required
 value={servicePincode}
 onChange={(e)=>setServicePincode(e.target.value)}

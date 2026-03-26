@@ -39,7 +39,7 @@ function Input({
   );
 }
 
-/* ================= SELECT (NEW) ================= */
+/* ================= SELECT ================= */
 
 type SelectProps = {
   label: string;
@@ -76,22 +76,22 @@ function Select({ label, name, value, onChange }: SelectProps) {
 const tabMeta = {
   residential: {
     title: "Residential Solar",
-    desc: "Perfect for homes and villas. Reduce electricity bills with rooftop solar.",
+    desc: "Perfect for homes and villas.",
     color: "from-blue-500 to-sky-500",
   },
   society: {
     title: "Housing Society Solar",
-    desc: "Lower common electricity costs using shared solar systems.",
+    desc: "Lower common electricity costs.",
     color: "from-emerald-500 to-green-500",
   },
   business: {
     title: "MSME / Business Solar",
-    desc: "Cut operational expenses with commercial solar plants.",
+    desc: "Cut operational expenses.",
     color: "from-purple-500 to-indigo-500",
   },
   agriculture: {
     title: "Agriculture Solar",
-    desc: "Reliable solar pumping and farm power solutions.",
+    desc: "Reliable solar pumping.",
     color: "from-orange-500 to-amber-500",
   },
 } as const;
@@ -116,63 +116,14 @@ export default function SolarJourney() {
 
   const [bill, setBill] = useState(3000);
 
+  // 🔥 NEW: smooth typing state
+  const [billInput, setBillInput] = useState("3000");
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  /* ================= BILL SLIDER ================= */
-
-  const BillSlider = () => (
-    <div className="mt-8">
-
-<label className="block text-sm font-semibold text-gray-700 mb-3">
-Monthly Electricity Bill
-</label>
-
-<div
-className="relative w-full h-3 bg-gray-200 rounded-full cursor-pointer"
-onClick={(e) => {
-  const rect = e.currentTarget.getBoundingClientRect();
-  const percent = (e.clientX - rect.left) / rect.width;
-  const newBill = Math.round(500 + percent * (20000 - 500));
-  setBill(newBill);
-}}
->
-
-{/* Progress Track */}
-<div
-className="absolute top-0 left-0 h-3 bg-blue-600 rounded-full transition-all"
-style={{ width: `${((bill - 500) / (20000 - 500)) * 100}%` }}
-></div>
-
-{/* Thumb */}
-<div
-className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-blue-600 rounded-full shadow-md"
-style={{ left: `${((bill - 500) / (20000 - 500)) * 100}%`, transform: "translate(-50%, -50%)" }}
-></div>
-
-</div>
-
-<motion.div
-key={bill}
-initial={{ scale: 0.9, opacity: 0 }}
-animate={{ scale: 1, opacity: 1 }}
-transition={{ duration: 0.2 }}
-className="text-center mt-4"
->
-
-<p className="text-sm text-gray-500">Your Monthly Bill</p>
-
-<h3 className="text-3xl font-bold text-blue-600">
-₹ {bill.toLocaleString()}
-</h3>
-
-</motion.div>
-
-</div>
-  );
 
   /* ================= SUBMIT ================= */
 
@@ -192,7 +143,7 @@ className="text-center mt-4"
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...formData,
-            bill,
+            bill, // ✅ backend unchanged
             category: activeTab,
           }),
         }
@@ -211,6 +162,7 @@ className="text-center mt-4"
           approval: "",
         });
         setBill(3000);
+        setBillInput("3000");
       }
     } catch (err) {
       alert("Server connection failed");
@@ -232,7 +184,6 @@ className="text-center mt-4"
     <section className="w-full text-black bg-gradient-to-b from-gray-50 to-white pt-[120px] pb-24 px-6">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
-        {/* IMAGE */}
         <motion.img
           src={journeyImg}
           initial={{ opacity: 0, x: -60 }}
@@ -240,21 +191,16 @@ className="text-center mt-4"
           className="w-full h-[520px] object-cover rounded-3xl shadow-2xl"
         />
 
-        {/* FORM */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           className="bg-white border rounded-3xl shadow-2xl p-8"
         >
-          <h2 className="text-3xl text-black font-bold">Start Your Solar Journey</h2>
+          <h2 className="text-3xl font-bold">Start Your Solar Journey</h2>
 
-          {/* TAB INFO */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               className={`mt-4 rounded-2xl p-4 text-white bg-gradient-to-r ${meta.color}`}
             >
               <p className="font-semibold">{meta.title}</p>
@@ -262,13 +208,12 @@ className="text-center mt-4"
             </motion.div>
           </AnimatePresence>
 
-          {/* TABS */}
           <div className="flex flex-wrap gap-3 my-7">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-2 rounded-full font-semibold ${
+                className={`px-5 py-2 rounded-full ${
                   activeTab === tab.id
                     ? "bg-blue-600 text-white"
                     : "bg-gray-100"
@@ -294,7 +239,39 @@ className="text-center mt-4"
               />
             )}
 
-            <BillSlider />
+            {/* ✅ FINAL BILL INPUT */}
+            <div>
+              <label className="text-sm text-gray-600 font-semibold">
+                Monthly Electricity Bill
+              </label>
+
+              <input
+                type="text"
+                inputMode="numeric"
+                value={billInput}
+                onChange={(e) => {
+                  const raw = e.target.value;
+
+                  if (raw === "") {
+                    setBillInput("");
+                    setBill(0);
+                    return;
+                  }
+
+                  if (/^\d+$/.test(raw)) {
+                    setBillInput(raw);
+                    setBill(Number(raw));
+                  }
+                }}
+                placeholder="Enter Monthly Electricity Bill"
+                className="w-full mt-2 px-4 py-3 rounded-xl
+                border border-gray-300 bg-gray-50
+                text-gray-900 placeholder:text-gray-400
+                focus:bg-white focus:border-blue-500
+                outline-none transition"
+              />
+            </div>
+
           </div>
 
           <button
